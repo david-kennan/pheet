@@ -1,0 +1,198 @@
+
+h3{font-family:"Trebuchet MS", Helvetica, sans-serif;}
+
+#div-gear {
+ float: right;
+ width:20px;
+}
+
+.boldLabel {
+	font-size: 90%;
+    font-weight: bold;
+}
+
+.stackedBox {
+	display: block;
+	float: left; 
+	clear: left; 
+	width: 460px;
+    border-bottom: 1px solid #E78F08;
+	min-height: 50px;
+}
+.stackedBoxContent {
+	font-size: 80%;
+}
+.commentBox {
+	display: block;
+	float: right; 
+	clear: right; 
+	width: 430px;
+    border-top: 1px solid #A6A6A6;
+	min-height: 40px;
+}
+.commentSource {
+	float: right; 
+	clear: right;
+	color: #A6A6A6;
+}
+.newCommentBox {
+	display: block;
+	float: right; 
+	clear: right; 
+	width: 430px;
+    border: 1px solid #A6A6A6;
+	margin-top: 7px;
+	margin-bottom: 10px;
+	min-height: 30px;
+}
+.newCommentHint {
+	float: left; 
+	clear: left;
+	color: #A6A6A6;
+}
+.addCommentBox {
+	display: block;
+	float: right; 
+	clear: right; 
+	width: 430px;
+    border: 1px solid #A6A6A6;
+	margin-top: 12px;
+	margin-bottom: 16px;
+	min-height: 70px;
+	background: #FFFFFF;
+}
+.addCommentButtons {
+	display: block;
+	float: right; 
+	clear: right; 
+	width: 430px;
+	min-height: 30px;
+	margin-bottom: 20px;
+}
+.actionBarButtonsBlock {
+	display: block;
+	float: right; 
+	clear: right; 
+	width: 430px;
+	min-height: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+.UpperRightGear {
+    position: absolute;
+	top: 0;
+    left: 0;
+}
+
+.blockOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+	width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.1;
+    filter: alpha(opacity=50);
+    z-index: 1000;
+}
+
+.myGear img {
+	vertical-align:top;
+	float: right;
+	position: absolute;
+	z-index: 2000;
+}
+
+.mouseOn{
+  background-color: #bcd5eb !important;
+  outline: 2px solid #5166bb !important;
+}
+
+.myMenu {
+	margin:0;
+	padding:0;
+	vertical-align:top;
+	display:inline;
+}
+
+.myMenu li {
+	list-style:none;
+	float:right;
+}
+
+.myMenu li a:link, .myMenu li a:visited {
+	display:block;
+	text-decoration:none;
+	background-color:#FFF;
+	padding: 0.5em 2em;
+	margin:0;
+	border-right: 1px solid #fff;
+	color:#111;
+}
+
+.myMenu li a:hover {
+	background-color:#0CF;	
+	border-top:1px solid #0CF;
+	border-right: 1px solid #0CF;
+}
+
+/*style the sub menu*/
+.myMenu li ul {
+	position:absolute;
+	visibility:hidden;
+	border-top:1px solid #0CF;
+	border-bottom:1px solid #0CF;
+	border-left:1px solid #0CF;
+	border-right:1px solid #0CF;
+	margin:0;
+	padding:0;
+}
+
+.myMenu li ul li {
+	display:inline;
+	float:none;
+}
+
+.myMenu li ul li a:link, .myMenu li ul li a:visited {
+	background-color:#FFF;
+	width:auto;
+}
+
+.myMenu li ul li a:hover {
+	background-color:#0CF;	
+}
+
+.callout {
+    position: relative;
+    margin: 18px 0;
+    padding: 18px 20px;
+    background-color: #eef4f9;
+    /* easy rounded corners for modern browsers */
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+.callout .notch {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    margin: 0;
+    border-top: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #eef4f9;
+    padding: 0;
+    width: 0;
+    height: 0;
+    /* ie6 height fix */
+    font-size: 0;
+    line-height: 0;
+     /* ie6 transparent fix */
+    _border-right-color: pink;
+    _border-left-color: pink;
+    _filter: chroma(color=pink);
+}
+
+.border-callout { border: 1px solid #c5d9e8; padding: 17px 19px; }
+.border-callout .border-notch { border-bottom-color: #c5d9e8; top: -11px; }
