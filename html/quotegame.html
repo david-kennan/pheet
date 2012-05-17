@@ -1,0 +1,159 @@
+<!DOCTYPE html> 
+<html>  
+  <head>
+  	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+        
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/CSS1.css" />
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="../js/JS1.js"></script>
+	<script type="text/javascript" src="../js/rsc.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+	<script type="text/javascript" src="../js/jQuery.twFile.js"></script>
+
+		
+	<script>	
+		// read data from a local file. later, modify to read from server
+		var j = {}; // store questions from JSON data
+		var q = 0; // counter for questions in gameplay
+	
+		// this is a stub function that should really get data (in batches) from the network but does not yet have that ability
+		function displayQuestion() {
+			q += 1;
+			document.getElementById("date").textContent = j[q]["date"];
+			document.getElementById("quote").textContent = "\"" + j[q]["quote"] + "\"";
+			document.getElementById("response").innerHTML = "<input type=\"button\" name=\"answerButton1\" value=\"" + j[q]["person1"] + "\" onclick=\"evalResponse(1)\" /><input type=\"button\" name=\"answerButton2\" value=\"" + j[q]["person2"] + "\" onclick=\"evalResponse(2)\" />";
+			// clear result of previous questions from display
+			document.getElementById("answer").textContent = "";
+			document.getElementById("sourcelink").textContent = "";
+			document.getElementById("nextq").textContent = "";
+			}
+
+		function onInit(){
+
+			$(document).ready(function(){
+				$.getJSON("questions.js",function(json){
+					// menu stuff
+					$('.myMenu > li').bind('mouseover', openSubMenu);
+					$('.myMenu > li').bind('mouseout', closeSubMenu);
+					function openSubMenu() {
+						$(this).find('ul').css('visibility', 'visible');	
+					};
+					function closeSubMenu() {
+						$(this).find('ul').css('visibility', 'hidden');	
+					};
+					
+					// get question data and begin game
+					j = deepCopy(json.questions);
+					q = -1;
+					displayQuestion();
+					
+					// welcome announcement to the game and the test
+					// insert a link to a welcome dialog
+					if($('#dialog_welcomeLayer').length == 0) {
+						$(document.body).append("\<div id=\"dialog_welcomeLayer\"\>\<a href=\"dialog_welcome.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
+						}
+					// activate that link as a dialog
+					$('#dialog_welcomeLayer').children([href="dialog_welcome.html"]).click();
+				});
+
+			});
+		}
+
+		function evalResponse(r) {
+			// should test for proper input here, improve that
+			var responsearray = {};
+			responsearray[0] = j[q]["person1"];
+			responsearray[1] = j[q]["person2"];
+			if( j[q]["answer"] == responsearray[r-1]){
+				document.getElementById("answer").textContent = "Correct!";
+			} else {
+				document.getElementById("answer").textContent = "Wrong!";
+			}
+			//show source link
+			document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\">Source</a>";
+			// add a button to ask next question
+			document.getElementById("nextq").innerHTML = "<input type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"displayQuestion()\" />";
+			}
+			
+	// This code is from the Net
+	function deepCopy(obj) {
+		if (typeof obj == 'object') {
+			if (isArray(obj)) {
+				var l = obj.length;
+				var r = new Array(l);
+				for (var i = 0; i < l; i++) {
+					r[i] = deepCopy(obj[i]);
+				}
+				return r;
+			} else {
+				var r = {};
+				r.prototype = obj.prototype;
+				for (var k in obj) {
+					r[k] = deepCopy(obj[k]);
+				}
+				return r;
+			}
+		}
+		return obj;
+	}
+
+	// This code is from the Net
+	// This function is a helper for deepCopy
+	var ARRAY_PROPS = {length: 'number', sort: 'function', slice: 'function', splice: 'function'};
+	/* Determining if something is an array in JavaScript is error-prone at best. */
+	function isArray(obj) {
+		if (obj instanceof Array)
+			return true;
+		// Otherwise, guess:
+		for (var k in ARRAY_PROPS) {
+			if (!(k in obj && typeof obj[k] == ARRAY_PROPS[k]))
+				return false;
+		}
+		return true;
+	}
+	//end of Net code for deepCopy			
+			
+	</script>
+    <title>Election 2012 quote quiz</title>
+	</head>
+  <body onload="onInit()">
+  
+  <div data-role="page">
+  
+	<div id="intro" data-role="header" class="block66">
+	
+		<div id="gear-statusLayer">
+		<span id="gear-status" class="myGear">
+			<img src="../img/gear-unselected.png" onclick="kToggle.toggle()" alt="Special interactions" width="32" height="32">
+		</span>
+		</div>
+	
+		<h3>Election 2012 Quote Quiz</h3>
+		</div>
+
+	<div data-role="content">
+
+	<div id="question" class="block66">
+		Who said this on <span id="date"></span>?
+		<br><br><i>
+		<span id="quote"></span></i>
+		<br><br>
+		</div>
+
+	<div id="response" class="block66">
+		<span id="answeroptions"></span>
+		</div>
+	
+	<div id="results" class="block66">
+		<br><br>
+		<span id="answer"></span>
+		<span id="sourcelink"></span>
+		<span id="nextq"></span>
+		</div>
+
+		</div><!-- /content -->
+	</div><!-- /page -->
+</body>
+</html>

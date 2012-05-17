@@ -1,0 +1,7 @@
+sm_app_name: incrp01
+sm_client_name: davidkennan
+html5: true
+ 
+development:
+  key: 617ccfb8-4bfa-4f5d-a1e1-007f97967437
+  secret: 022153e5-18ac-4378-8494-67a24163b40a

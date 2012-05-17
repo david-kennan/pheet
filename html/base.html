@@ -1,21 +1,26 @@
 <!DOCTYPE html> 
 <html>  
   <head>
-
-	<link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="Stylesheet" />	
+  
+ 	<link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="Stylesheet" />	
 	<link rel="stylesheet" type="text/css" href="../css/CSS1.css" />
-	
-	<!-- Load libraries --!>
-		<!-- to load JQuery from Google servers enable this first <script src="http://www.google.com/jsapi"></script> --!>
-		<!-- <script>google.load("jquery", "1.7.1");</script> etc. --!>
-		<!-- Question: can we load just one file and load the rest (JQuery stuff) from within our main script? --!>
+        
 		<script type="text/javascript" src="../js/jquery-1.7.1.js"></script>
 		<script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
 		<script type="text/javascript" src="../js/jQuery.twFile.js"></script>
 		<script type="text/javascript" src="../js/JS1.js"></script>
-		
+		<script type="text/javascript" src="../js/rsc.js"></script> 
+  
+  
+<!--	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" /> -->
+<!--	<link rel="stylesheet" type="text/css" href="../css/CSS1.css" /> -->
+<!--	<script src="http://code.jquery.com/jquery-1.7.1.js"></script> -->
+<!--	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.js"></script>	 -->
+<!--	<script type="text/javascript" src="../js/jQuery.twFile.js"></script> -->
+<!--	<script type="text/javascript" src="../js/JS1.js"></script> -->
+<!--	<script type="text/javascript" src="../js/rsc.js"></script>	 -->
+
 	<script>	
-		function onInit(){
 			$(document).ready(function(){
 					// menu stuff
 					$('.myMenu > li').bind('mouseover', openSubMenu);
@@ -27,39 +32,30 @@
 						$(this).find('ul').css('visibility', 'hidden');	
 					};
 			});
-		}
 	</script>
     <title>Base test file</title>
 	</head>
-  <body onload="onInit()">
+  <body>
   
-  	<div id="divSettings">
-		<span id="gear-status" class="myGear"></span>
-		<span id="settingz">
-			<ul class="myMenu">
-				<li><a href="#">Menu</a>
-					<ul>
-						<li><a href="settings.html">Settings</a></li>
-						<li><a href="#" onclick="toggle()">Toggle</a></li>
-					</ul>
-				</li>
-			</ul>	
+	<div id="gear-statusLayer">
+		<span id="gear-status" class="myGear">
+			<img src="../img/gear-selected.png" onclick="kToggle.toggle()" alt="Special interactions" width="16" height="16">
 		</span>
 	</div>
-	
-	<div id="blockId101" class="block66">
+
+	<div id="intro" class="block66">
 		<br><br>
 		<h3>This is a test file</h3>
 	</div>
 
-	<div id="blockId102" class="block66">
+	<div id="question" class="block66">
 		Block of stuff 102
 		<br><br><i>
 		more stuff
 		<br><br>
 		</div>
 
-	<div id="blockId103" class="block66">
+	<div id="response" class="block66">
 		Block of stuff 103
 		<span id="answeroptions"></span>
 		<br><br><i>
@@ -67,7 +63,7 @@
 		<br><br>
 	</div>
 	
-	<div id="blockId104" class="block66">
+	<div id="results" class="block66">
 		Block of special stuff 104
 		<br><br><i>
 		Block of detail

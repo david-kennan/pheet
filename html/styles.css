@@ -1,0 +1,155 @@
+html {
+	font-size: 16px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	background-color: #fff;
+	color: #656262;
+	outline-style: none;
+	outline-width: medium;
+	height: 100%;
+	padding: 25px 50px;
+}
+
+input[type="text"],textarea,input[type="password"],select {
+	padding: 4px;
+	width: 280px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-box-shadow: 1px 1px 2px #CCCCCC inset;
+	-webkit-box-shadow: 1px 1px 2px #CCCCCC inset;
+	box-shadow: 1px 1px 2px #CCCCCC inset;
+	background: #fff;
+	border: 1px solid #B2B2B2;
+	color: #2D302D;
+	margin-top: 0px;
+}
+
+button, .button, .hintTrigger, .smallHintTrigger, .small_button {
+  cursor: pointer;
+  padding: 6px 14px;
+  color: #fff !important;
+  -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .5);
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .5);
+  -o-box-shadow: 0 2px 2px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .5);
+  -ms-box-shadow: 0 2px 2px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .5);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .5);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+  text-decoration: none;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  }
+
+.button:hover, .button a:hover {
+  color: rgba(250, 250, 250, .96);
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .8);
+}
+
+.button:active, .button a:active {
+  padding: 4px 14px 7px;
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
+  -o-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
+  -ms-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
+  }
+
+.button.blue, .button.blue a, .hintTrigger, .smallHintTrigger, .hintTrigger a, .smallHintTrigger a{
+  background: #6bbad7;
+  background: -moz-linear-gradient(top, #76cced, #6bbad7);
+  background: -webkit-linear-gradient(top, #76cced, #6bbad7);
+  background: -o-linear-gradient(top, #76cced, #6bbad7);
+  background: -ms-linear-gradient(top, #76cced, #6bbad7);
+  background: linear-gradient(top, #76cced, #6bbad7);
+  border: 1px solid #4ca8ca;
+  border-top-color: #4cb2da;
+  border-bottom-color: #4c9bb9;
+}
+
+.button.blue:hover, .button.blue a:hover {
+  background: #2c9cc6;
+  background: -moz-linear-gradient(top, #3cb7e5, #2c9cc6);
+  background: -webkit-linear-gradient(top, #3cb7e5, #2c9cc6);
+  background: -o-linear-gradient(top, #3cb7e5, #2c9cc6);
+  background: -ms-linear-gradient(top, #3cb7e5, #2c9cc6);
+  background: linear-gradient(top, #3cb7e5, #2c9cc6);
+  border: 1px solid #0083b4;
+  border-top-color: #0092ca;
+  border-bottom-color: #00709b;
+}
+
+.button, .button,  .small_button  {
+  background: #98be47;
+  background: -moz-linear-gradient(top, #a8cf43, #98be47);
+  background: -webkit-linear-gradient(top, #a8cf43, #98be47);
+  background: -o-linear-gradient(top, #a8cf43, #98be47);
+  background: -ms-linear-gradient(top, #a8cf43, #98be47);
+  background: linear-gradient(top, #a8cf43, #98be47);
+  border: 1px solid #8cac42;
+  border-top-color: #94b146;
+  border-bottom-color: #7b9b36;
+}
+.button:hover, .button a:hover {
+  border: 1px solid #699631;
+  border-top-color: #6d9e34;
+  border-bottom-color: #457119;
+  background: #67a215;
+  background: -moz-linear-gradient(top, #9dbf46, #67a215);
+  background: -webkit-linear-gradient(top, #9dbf46, #67a215);
+  background: -o-linear-gradient(top, #9dbf46, #67a215);
+  background: -ms-linear-gradient(top, #9dbf46, #67a215);
+  background: linear-gradient(top, #9dbf46, #67a215);
+}
+
+.description {
+  margin: 25px 0px;
+}
+
+#results {
+  padding: 15px 10px;
+  border: 1px solid #CCC;
+  margin: 25px 0px;
+}
+
+.footnote {
+  font-size: 13px;
+  margin-top: 50px;
+}
+
+.form {
+  margin-bottom: 100px;
+}
+
+.results_header {
+  overflow: auto;
+}
+
+.results_header h1, .results_objectbrowser {
+  float: left;
+}
+
+.results_header h1 {
+  padding: 0px; 
+  margin: 0px;
+}
+
+.results_objectbrowser {
+  margin: 15px 0px 0px 50px;
+  font-size: 14px;
+}
+
+textarea, input {
+  font-size: 16px;
+}
+
+textarea {
+  min-width: 700px;
+  min-height: 250px;
+}
+

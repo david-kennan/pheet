@@ -1,6 +1,28 @@
 
 h3{font-family:"Trebuchet MS", Helvetica, sans-serif;}
 
+/*JQuery Mobile ui dialog : remove the black background overlay
+.ui-mobile [data-role="dialog"], .ui-page {
+display:block !important;
+}
+*/
+
+.ui-dialog-background {
+	opacity: 0.5;
+	display: block !important;
+	-webkit-transition: opacity 0.5s ease-in;
+}
+
+.ui-dialog-background.pop.in {
+	opacity: 1;
+	-webkit-transition: opacity 0.5s ease-in;
+}
+
+.ui-dialog {
+	min-height: 100% !important;
+	background: transparent !important;
+}
+
 #div-gear {
  float: right;
  width:20px;
@@ -94,14 +116,15 @@ h3{font-family:"Trebuchet MS", Helvetica, sans-serif;}
     background: #000;
     opacity: 0.1;
     filter: alpha(opacity=50);
-    z-index: 1000;
 }
 
 .myGear img {
+    position: absolute;
+	top: 0;
+    left: 0;
 	vertical-align:top;
 	float: right;
 	position: absolute;
-	z-index: 2000;
 }
 
 .mouseOn{
