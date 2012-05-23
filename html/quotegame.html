@@ -23,7 +23,8 @@
 			q += 1;
 			document.getElementById("date").textContent = j[q]["date"];
 			document.getElementById("quote").textContent = "\"" + j[q]["quote"] + "\"";
-			document.getElementById("response").innerHTML = "<input type=\"button\" name=\"answerButton1\" value=\"" + j[q]["person1"] + "\" onclick=\"evalResponse(1)\" /><input type=\"button\" name=\"answerButton2\" value=\"" + j[q]["person2"] + "\" onclick=\"evalResponse(2)\" />";
+			document.getElementById("response").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"answerButton1\" value=\"" + j[q]["person1"] + "\" onclick=\"evalResponse(1)\" /><input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"answerButton2\" value=\"" + j[q]["person2"] + "\" onclick=\"evalResponse(2)\" />";
+			$("input[type='button']").button();		// Added by xiaozc, to make button as JQM style
 			// clear result of previous questions from display
 			document.getElementById("answer").textContent = "";
 			document.getElementById("sourcelink").textContent = "";
@@ -74,7 +75,8 @@
 			//show source link
 			document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\">Source</a>";
 			// add a button to ask next question
-			document.getElementById("nextq").innerHTML = "<input type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"displayQuestion()\" />";
+			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"displayQuestion()\" />";
+			$("input[type='button']").button();		// Added by xiaozc, to make button as JQM style
 			}
 			
 	// This code is from the Net
