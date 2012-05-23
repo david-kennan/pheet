@@ -24,7 +24,7 @@
 			document.getElementById("date").textContent = j[q]["date"];
 			document.getElementById("quote").textContent = "\"" + j[q]["quote"] + "\"";
 			document.getElementById("response").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"answerButton1\" value=\"" + j[q]["person1"] + "\" onclick=\"evalResponse(1)\" /><input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"answerButton2\" value=\"" + j[q]["person2"] + "\" onclick=\"evalResponse(2)\" />";
-			$("input[type='button']").button();		// Added by xiaozc, to make button as JQM style
+			$('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
 			// clear result of previous questions from display
 			document.getElementById("answer").textContent = "";
 			document.getElementById("sourcelink").textContent = "";
@@ -62,6 +62,11 @@
 			});
 		}
 
+		function adjustGearSize() {		// Added by xiaozc, to make the size of gear icon properly
+			var headerHeight = $('#intro').height();
+			$('#gear-status img').css('width', headerHeight).css('height', headerHeight);
+		}
+
 		function evalResponse(r) {
 			// should test for proper input here, improve that
 			var responsearray = {};
@@ -76,7 +81,7 @@
 			document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\">Source</a>";
 			// add a button to ask next question
 			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"displayQuestion()\" />";
-			$("input[type='button']").button();		// Added by xiaozc, to make button as JQM style
+			$('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
 			}
 			
 	// This code is from the Net
@@ -128,7 +133,7 @@
 	
 		<div id="gear-statusLayer">
 		<span id="gear-status" class="myGear">
-			<img src="../img/gear-unselected.png" onclick="kToggle.toggle()" alt="Special interactions" width="32" height="32">
+			<img src="../img/gear-unselected.png" onclick="kToggle.toggle()" alt="Special interactions" width="32" height="32" onload="adjustGearSize()">		<!-- Added by xiaozc, call the method to adjust the gear icon size on load -->
 		</span>
 		</div>
 	
