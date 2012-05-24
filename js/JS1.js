@@ -100,6 +100,28 @@
 		}
 	}
 
+	function scrollProperPosition(back) {
+		$(document).ready(function(){
+			var activeBlockPos = $(activeBlock).offset();
+			var x = activeBlockPos.top - 10;		// TODO: need refine
+			if (back) {
+				x = -x;
+			}
+
+			for (var i = 0; i < getObjectLength(blocks); i++) {
+				blocks[i].id;
+				var blockName = blocks[i].id + "HighlightBlock";
+				var blockSelector = "#" + blockName;
+				var topValue = parseInt($(blockSelector).css('top'));
+				$(blockSelector).css('top', (topValue - x) + 'px');
+			}
+			var uiPage= $('.ui-mobile [data-role="page"], .ui-mobile [data-role="dialog"], .ui-page');
+			topValue = parseInt(uiPage.css('top'));
+			uiPage.css('top', (topValue - x) + 'px');
+
+		});
+	}
+
 	function showBlocks() {
 		if($('#showBlocksLayer').length == 0) {
 			$(document.body).append("\<div id=\"showBlocksLayer\"\>\<\/span\>\<span id=\"showBlocksSpan\" class=\"blockOverlay\"\>\<\/span\>\<\/div\>");
@@ -139,7 +161,7 @@
 		if( togglemode == true ) {
 			var blockName = $(this).prop('id') + "SelectedBlock";
 			activeBlock = "#" + blockName;
-			var tmptext = "\<div id=\"" + blockName + "\"\>\<a href=\"dialog_a.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>";
+			var tmptext = "\<div id=\"" + blockName + "\"\>\<a id=\"dialog_a\" href=\"dialog_a.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>";
 			$(this).append(tmptext);
 			var blockSelector = "#" + blockName;
 			var z = getMaxZIndexButGear()+1;
@@ -172,6 +194,9 @@
 			
 			// display the page-level annotation dialog, see logic in pageload handler above
 			$(blockSelector).children([href="dialog_a.html"]).click();
+
+			scrollProperPosition();
+			
 			inShowNodeList = false;
 			// need to call hideNodeList() when that dialog is closed!
 			return;
