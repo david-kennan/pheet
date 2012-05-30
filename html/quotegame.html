@@ -31,9 +31,13 @@
 			document.getElementById("nextq").textContent = "";
 			}
 
-		function onInit(){
-
+		//function onInit(){
+		//added by sunbo when go to main page to adjust the gear size
+                        $("#main").live("pageshow",function(){
+                        adjustGearSize();
+                        })
 			$(document).ready(function(){
+
 				$.getJSON("questions.js",function(json){
 					// menu stuff
 					$('.myMenu > li').bind('mouseover', openSubMenu);
@@ -50,17 +54,21 @@
 					q = -1;
 					displayQuestion();
 					
-					// welcome announcement to the game and the test
-					// insert a link to a welcome dialog
-					if($('#dialog_welcomeLayer').length == 0) {
-						$(document.body).append("\<div id=\"dialog_welcomeLayer\"\>\<a href=\"dialog_welcome.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
-						}
-					// activate that link as a dialog
-					$('#dialog_welcomeLayer').children([href="dialog_welcome.html"]).click();
+					
 				});
-
+				
+				
+				$('#dialog_welcomeLayer').children([href="dialog_welcome.html"]).click();
+				$('#dialog_welcomeLayer').css("min-height","0px");
+				// welcome announcement to the game and the test
+					// insert a link to a welcome dialog
+					//if($('#dialog_welcomeLayer').length == 0) {
+					//	$(document.body).append("\<div id=\"dialog_welcomeLayer\"\>\<a href=\"dialog_welcome.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
+					//	}
+					// activate that link as a dialog
+					
 			});
-		}
+//	}
 
 		function adjustGearSize() {		// Added by xiaozc, to make the size of gear icon properly
 			var headerHeight = $('#intro').height();
@@ -125,9 +133,9 @@
 	</script>
     <title>Election 2012 quote quiz</title>
 	</head>
-  <body onload="onInit()">
-  
-  <div data-role="page">
+  <body >
+  <div id="dialog_welcomeLayer" data-role="page" ><a href="dialog_welcome.html" data-rel="dialog" data-transition="pop"></a></div>
+  <div data-role="page" id="main">
   
 	<div id="intro" data-role="header" class="block66">
 	
@@ -162,5 +170,6 @@
 
 		</div><!-- /content -->
 	</div><!-- /page -->
+	
 </body>
 </html>
