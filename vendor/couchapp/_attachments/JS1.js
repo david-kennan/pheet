@@ -75,10 +75,19 @@
 				// BEGIN TEST
 				console.log("start data fetch");
 				
-				$.getJSON("datafile.js",function(jsonZ){
-					nodes = deepCopy(jsonZ.nodes);
-					console.log("ACTUAL data fetch");
-				});
+//				$.getJSON("datafile.js",function(jsonZ){
+//					nodes = deepCopy(jsonZ.nodes);
+//					console.log("ACTUAL data fetch");
+//				});
+		    $db = $.couch.db("quote");
+		    $db.view("pheet/comment",
+		      { success: function( data ) {
+		          var jsonZ = data.rows[0].value;
+		          nodes = deepCopy(jsonZ.nodes);
+		        }
+		      });
+
+
 				//getData();	
 				// RESTORE THIS !!!
 				// end of test
@@ -88,13 +97,13 @@
 			//if($('#gear-statusLayer').length == 0) {
 			//	$(document.body).append("\<div id=\"gear-statusLayer\"\>\<span id=\"gear-status\" class=\"myGear\"\>\<\/span\>\<\/div\>");
 			//}
-			$('#gear-status')[0].innerHTML = "\<img src=\"..\/img\/gear-selected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
+			$('#gear-status')[0].innerHTML = "\<img src=\"style\/img\/gear-selected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
 			var z = getMaxZIndex()+100;
 			$('#gear-status').children("img").css('z-index',z);
 			showBlocks();
 			togglemode = true;
 		} else {
-			$('#gear-status')[0].innerHTML = "\<img src=\"..\/img\/gear-unselected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
+			$('#gear-status')[0].innerHTML = "\<img src=\"style\/img\/gear-unselected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
 			togglemode = false;
 			blocksShowing = false;
 			$('#showBlocksLayer').remove();
@@ -399,9 +408,17 @@
 	function getData() {
 		// this is intended to wrap an API (web service)
 		// Future: seems like an initial API call will be needed to get either a chunk or all data for the app
-		$.getJSON("datafile.js",function(jsonZ){
-			nodes = deepCopy(jsonZ.nodes);
-		});
+//		$.getJSON("datafile.js",function(jsonZ){
+//			nodes = deepCopy(jsonZ.nodes);
+//		});
+		$db = $.couch.db("quote");
+    $db.view("pheet/comment",
+      { success: function( data ) {
+          var jsonZ = data.rows[0].value;
+          nodes = deepCopy(jsonZ.nodes);
+        }
+      });
+
 	}
 
 	// This code is from the Net
