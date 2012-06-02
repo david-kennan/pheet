@@ -41,30 +41,38 @@
 		function onInit(){
 
 			$(document).ready(function(){
-				$.getJSON("questions.js",function(json){
-					// menu stuff
-					$('.myMenu > li').bind('mouseover', openSubMenu);
-					$('.myMenu > li').bind('mouseout', closeSubMenu);
-					function openSubMenu() {
-						$(this).find('ul').css('visibility', 'visible');	
-					};
-					function closeSubMenu() {
-						$(this).find('ul').css('visibility', 'hidden');	
-					};
-					
-					// get question data and begin game
-					j = deepCopy(json.questions);
-					q = -1;
-					displayQuestion();
-					
-					// welcome announcement to the game and the test
-					// insert a link to a welcome dialog
-					if($('#dialog_welcomeLayer').length == 0) {
-						$(document.body).append("\<div id=\"dialog_welcomeLayer\"\>\<a href=\"dialog_welcome.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
-						}
-					// activate that link as a dialog
-					$('#dialog_welcomeLayer').children([href="dialog_welcome.html"]).click();
-				});
+//				$.getJSON("questions.js",function(json){	// by xiaozc
+		    $db = $.couch.db("quote");
+		    $db.view("pheet/question",
+		      { success: function( data ) {
+		          var json = data.rows[0].value;
+
+							// menu stuff
+							$('.myMenu > li').bind('mouseover', openSubMenu);
+							$('.myMenu > li').bind('mouseout', closeSubMenu);
+							function openSubMenu() {
+								$(this).find('ul').css('visibility', 'visible');	
+							};
+							function closeSubMenu() {
+								$(this).find('ul').css('visibility', 'hidden');	
+							};
+							
+							// get question data and begin game
+							j = deepCopy(json.questions);
+							q = -1;
+							displayQuestion();
+							
+							// welcome announcement to the game and the test
+							// insert a link to a welcome dialog
+							if($('#dialog_welcomeLayer').length == 0) {
+								$(document.body).append("\<div id=\"dialog_welcomeLayer\"\>\<a href=\"dialog_welcome.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
+								}
+							// activate that link as a dialog
+							$('#dialog_welcomeLayer').children([href="dialog_welcome.html"]).click();
+
+		        }
+		      });
+
 
 			});
 		}
