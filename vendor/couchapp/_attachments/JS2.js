@@ -99,7 +99,7 @@
 			//}
 //			$('#gear-status')[0].innerHTML = "\<img src=\"style\/img\/gear-selected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
 			var z = getMaxZIndex()+100;
-//			$('#gear-status').children("img").css('z-index',z);
+			$('#footer').css('z-index',z);
 			showBlocks();
 			togglemode = true;
 		} else {
@@ -140,15 +140,28 @@
 			var tmptext = "\<div id=\"" + blockName + "\"\>\<\/div\>";
 			$('#showBlocksLayer').append(tmptext);
 			$(blockSelector).css({'position': 'absolute', 'z-index': z, 'top': blocks[i].top, 'left': blocks[i].left, 'height': blocks[i].height + 'px', 'width': blocks[i].width + 'px', 'border': '1px dashed #f11'});
-			$(blockSelector).on('click', showNodeList);}
+			$(blockSelector).on('click', showNodeList);
+		}
 
 			// quick tutorial on the page blocks
 			// insert a link to dialog
-			if($('#dialog_blockwelcomeLayer').length == 0) {
-				$(document.body).append("\<div id=\"dialog_blockwelcomeLayer\"\>\<a href=\"dialog_blockwelcome.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
-				}
+//			if($('#dialog_blockwelcomeLayer').length == 0) {
+//				$(document.body).append("\<div id=\"dialog_blockwelcomeLayer\"\>\<a href=\"dialog_blockwelcome.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
+//				}
 			// activate that link as a dialog
-			$('#dialog_blockwelcomeLayer').children([href="dialog_blockwelcome.html"]).click();
+//			$('#dialog_blockwelcomeLayer').children([href="dialog_blockwelcome.html"]).click();
+
+		if(!$.cookie('toast')) {
+			$("<div class='ui-loader ui-overlay-shadow ui-body-a ui-corner-all'><h3 style='text-align: center;'>Tap any area to make your suggestion</h3></div>")
+    		.css({ "display":"block", "opacity":0.96, "left":"20%", "right":"20%"})
+    		.appendTo($("body"))
+    		.delay(2000)
+    		.fadeOut(300, function(){
+        	$(this).remove();
+    		});
+			$.cookie('toast', '1');
+		}
+
 			var z = getMaxZIndexButGear()+1;
 			$(":jqmData(role=dialog)").css('z-index', z);
 	}
@@ -496,8 +509,8 @@
 	
 	function getMaxZIndexButGear() {
 		var zIndexMax = 0;
-		$("div,span").each(function () {
-			if( $(this).attr('id') != 'gear-status' ) { 
+		$("div").each(function () {
+			if( $(this).attr('id') != 'footer' ) {		// footer
 				var z = parseInt($(this).css('z-index'));
 				if (z > zIndexMax) zIndexMax = z;
 			}
