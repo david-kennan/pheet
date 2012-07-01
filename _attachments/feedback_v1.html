@@ -34,7 +34,9 @@
 							$.couch.db("quote").saveDoc(doc, {
 							    success: function(data) {
 //							        console.log(data);
-							        alert('Your suggestion submited successfully.');
+							        console.log('Your suggestion submited successfully.');
+											window.opener = null;
+											window.close();
 							    },
 							    error: function(status) {
 //							        console.log(status);

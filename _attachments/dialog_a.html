@@ -7,22 +7,19 @@
 </head> 
 <body> 
 
-<div data-role="dialog">
+<div id="dialog_a" data-role="dialog">
 	<div data-role="header" data-theme="d">
 		<h1>Feature List</h1>
 		</div>
 	<div data-role="content" data-theme="c">
 		<h2>Your suggestion</h2>
 			<div id="nodeDetailNewCommentDiv">
-			<form action="form.php" method="post"> 
 				<div data-role="fieldcontain">
 					<label for="textarea"></label>
 					<textarea name="textarea" id="textarea" placeholder="Type your suggestion here"></textarea>
 				</div>
-				<div style="text-align: center;"><a href="" data-role="button" data-rel="back" data-theme="b" data-inline="true">Submit	</a></div>
-			</form>
+				<div style="text-align: center;"><a id="sendbutton" data-role="button" data-rel="back" data-theme="b" data-inline="true" onclick="savefeedback();">Submit	</a></div>
 			</div>
-		<h2>Other people are saying:</h2>	
 			<span id="nodeDisplay"></span>
 		<a href="" data-role="button" data-rel="back" data-theme="b">Go back</a>         
 		</div>

@@ -66,6 +66,15 @@
 		$('div[data-role="dialog"]').live('pagehide', function(e, ui) {
 			$(".ui-dialog-background ").removeClass("ui-dialog-background ");
 		});
+
+//		$('div[data-role="dialog"]').live('pageshow',function(e, ui){
+//		  // alert('This page was just hidden: '+ ui.prevPage);
+//		  if($(activeBlock).attr('id')) {
+////		  	document.getElementById($(activeBlock).attr('id')).scrollIntoView();
+//				adjustPosition();		// by xiaozc		  
+//			}
+//		});
+
 	});
 	
 	function toggle() {
@@ -99,7 +108,7 @@
 			//}
 //			$('#gear-status')[0].innerHTML = "\<img src=\"style\/img\/gear-selected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
 			var z = getMaxZIndex()+100;
-			$('#footer').css('z-index',z);
+			$('#sugbutton').css('z-index',z);
 			showBlocks();
 			togglemode = true;
 		} else {
@@ -115,6 +124,7 @@
 		if (offset) {
 			var x = offset.top;
 			x += 23 + $(activeBlock).prop("clientHeight");
+
 			$('.ui-dialog-contain').css('margin-top', x + 'px');		// $('.ui-mobile [data-role="page"], .ui-mobile [data-role="dialog"], .ui-page')
 		}
 	}
@@ -166,7 +176,27 @@
 			$(":jqmData(role=dialog)").css('z-index', z);
 	}
 
-	function showNodeList() {
+	function showNodeList(e) {
+		var posx = 0;
+		var posy = 0;
+		if (!e) var e = window.event;
+		if (e.pageX || e.pageY) 	{
+			posx = e.pageX;
+			posy = e.pageY;
+		} else if (e.clientX || e.clientY) 	{
+			posx = e.clientX + document.body.scrollLeft
+				+ document.documentElement.scrollLeft;
+			posy = e.clientY + document.body.scrollTop
+				+ document.documentElement.scrollTop;
+		}
+		// posx and posy contain the mouse position relative to the document
+		if (posx > $('#sugbutton').offset().left && posy > $('#sugbutton').offset().top) {		// by xiaozc. clicked in the link button area
+	  	kToggle.toggle();
+  		$('#sugbutton').html('Suggestions?');
+  		return ;
+		}
+
+
 		if( inShowNodeList) return; else inShowNodeList = true;
 		if( togglemode == true ) {
 			var blockName = $(this).prop('id') + "SelectedBlock";
@@ -510,7 +540,7 @@
 	function getMaxZIndexButGear() {
 		var zIndexMax = 0;
 		$("div").each(function () {
-			if( $(this).attr('id') != 'footer' ) {		// footer
+			if( $(this).attr('id') != 'sugbutton' ) {		// sugbutton
 				var z = parseInt($(this).css('z-index'));
 				if (z > zIndexMax) zIndexMax = z;
 			}
@@ -534,3 +564,24 @@
 	window['kToggle']['getMaxZIndex'] = getMaxZIndex; // helpful in debugging
 	window['kToggle']['getMaxZIndexButGear'] = getMaxZIndexButGear; // helpful in debugging
 })();
+
+
+	function gotofeedback() {
+	  	kToggle.toggle();
+  		$('#sugbutton').html('Back to game');
+	}
+
+	function savefeedback() {
+		var doc = new Object();
+		doc.feedback = $('#textarea').val();
+		$.couch.db("quote").saveDoc(doc, {
+		    success: function(data) {
+//						console.log(data);
+		        console.log('Your suggestion submited successfully.');
+		    },
+		    error: function(status) {
+//						console.log(status);
+		        console.log('Your suggestion submited failed, please try again.');
+		    }
+		});
+	}

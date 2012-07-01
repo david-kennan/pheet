@@ -26,12 +26,11 @@
 		var j = {}; // store questions from JSON data
 		var q = 0; // counter for questions in gameplay
 		var page_bg = $('#page').css('background');
-		var mode = false;
 
 		$(document).ready(function(){
 			page_bg = $('#page').css('background');
 			$('#page').css('background', 'black');
-			
+
 			// welcome announcement to the game and the test
 			// insert a link to a welcome dialog
 			if($('#dialog_welcomeLayer').length == 0) {
@@ -49,6 +48,7 @@
 				    	$('#page').css('background', page_bg);
 		  			  $('#page').append($('#pageinfo').html()).trigger('create');
 		  			  $('#pageinfo').empty();		// This line is needed to make red block shown correctly. by xiaozc
+		  			 	$('#sugbutton').removeClass('ui-link');
 
 							// menu stuff
 							$('.myMenu > li').bind('mouseover', openSubMenu);
@@ -72,7 +72,6 @@
 
 		});
 
-
 		// this is a stub function that should really get data (in batches) from the network but does not yet have that ability
 		function displayQuestion() {
 			q += 1;
@@ -85,17 +84,6 @@
 			document.getElementById("sourcelink").textContent = "";
 			document.getElementById("nextq").textContent = "";
 			}
-
-		function gotofeedback() {
-		  	kToggle.toggle();
-		  	if (!mode) {		// by xiaozc. mode means "Suggestions mode"
-		  		$('#footer h4').html('Back to game');
-		  		mode = true;
-		  	} else {
-		  		$('#footer h4').html('Suggestions');
-		  		mode = false;
-		  	}
-		}
 
 		function evalResponse(r) {
 			// should test for proper input here, improve that
@@ -203,8 +191,9 @@
 	
 		</div><!-- /content -->
 	
-		<div id="footer" data-role="footer" data-position="fixed" onclick="gotofeedback();" class="ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
-	  	<h4 style="text-align:right" class="ui-title" role="heading" aria-level="1">Suggestions</h4>
+		<div id="footer" data-role="footer" data-position="fixed" class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
+	    <div class="ui-btn-left" style="top:15px;color:grey">v02</div>
+	  	<h4 style="text-align:right" class="ui-title" role="heading" aria-level="1"><a id="sugbutton" onclick="gotofeedback();" class="ui-link-a">Suggestions?</a></h4>
 	  </div>
 
 	</div>
