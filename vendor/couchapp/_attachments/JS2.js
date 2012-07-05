@@ -67,13 +67,9 @@
 			$(".ui-dialog-background ").removeClass("ui-dialog-background ");
 		});
 
-//		$('div[data-role="dialog"]').live('pageshow',function(e, ui){
-//		  // alert('This page was just hidden: '+ ui.prevPage);
-//		  if($(activeBlock).attr('id')) {
-////		  	document.getElementById($(activeBlock).attr('id')).scrollIntoView();
-//				adjustPosition();		// by xiaozc		  
-//			}
-//		});
+		$('div[data-role="dialog"]').live('pageshow',function(e, ui){
+			$('#textarea').focus();		// by xiaozc
+		});
 
 	});
 	
