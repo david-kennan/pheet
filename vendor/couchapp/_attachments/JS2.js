@@ -46,9 +46,10 @@
 	$(document).bind( "pagehide", function( e, data ) {
 		// We only want to handle leaving our dialogs
 		//var u = $.mobile.path.parseUrl( data.prevPage ); // this seemed right but prePage was not set
-		var u = $.mobile.path.parseUrl( e.target.dataset.url);
-		re = /dialog_/;
-		if ( u.href.search(re) !== -1 ) {
+                // BAD!!, not android 2.2-3* compat ** var u = $.mobile.path.parseUrl( e.target.dataset.url);
+	  	var u = e.target.getAttribute("data-role");
+                re = /dialog_/;
+		if ( u.search(re) !== -1 ) {
 			 //Call method that displays the correct data in the dialog on the fly 
 			pagehide( u, data.options );
 		}
