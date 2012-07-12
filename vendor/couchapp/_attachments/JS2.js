@@ -18,17 +18,9 @@
 
 	function displaynod( urlObj, options ){
 		// if the dialog should contain a Feature List, then display the feature list
-		if($('#nodeDisplay').length != 0) $('#nodeDisplay')[0].innerHTML = Ztmptext;
+		//if($('#nodeDisplay').length != 0) $('#nodeDisplay')[0].innerHTML = Ztmptext;
 		var z = getMaxZIndexButGear()+1;
 		$(":jqmData(role=dialog)").css('z-index', z);
-	}
-
-	function pagehide( urlObj, options ){
-		// if the prevPage was dialog_a then we want to refresh the block display
-		re = /dialog_a/;
-		if ( urlObj.filename.search(re) !== -1 ) {
-			hideNodeList();
-		}
 	}
 
 	// bind to pageLoad event so that dialog can be updated with NodeList
@@ -48,10 +40,9 @@
 		//var u = $.mobile.path.parseUrl( data.prevPage ); // this seemed right but prePage was not set
                 // BAD!!, not android 2.2-3* compat ** var u = $.mobile.path.parseUrl( e.target.dataset.url);
 	  	var u = e.target.getAttribute("data-role");
-                re = /dialog_/;
-		if ( u.search(re) !== -1 ) {
-			 //Call method that displays the correct data in the dialog on the fly 
-			pagehide( u, data.options );
+		if ( u == "dialog" ) {
+			 // Call method that displays the correct data in the dialog on the fly 
+			 hideNodeList();
 		}
 	});
 
@@ -85,13 +76,13 @@
 //					nodes = deepCopy(jsonZ.nodes);
 //					console.log("ACTUAL data fetch");
 //				});
-		    $db = $.couch.db("quote");
-		    $db.view("pheet/comment",
-		      { success: function( data ) {
-		          var jsonZ = data.rows[0].value;
-		          nodes = deepCopy(jsonZ.nodes);
-		        }
-		      });
+		    //$db = $.couch.db("quote");
+		    //$db.view("pheet/comment",
+		    //  { success: function( data ) {
+		    //      var jsonZ = data.rows[0].value;
+		    //      nodes = deepCopy(jsonZ.nodes);
+		    //    }
+		    //  });
 
 
 				//getData();	

@@ -171,10 +171,10 @@
 	
 		<div data-role="content" class="ui-content" role="main">
 	
-			<div id="question" class="block66">
-				Who said this on <span id="date"></span>?
-				<br><br><i>
-				<span id="quote"></span></i>
+                      <div id="question" class="block66">
+                        <b>Who said this on <span id="date"></span>?</b>
+				<br>
+                                <i><span id="quote"></span></i>
 				<br>
 			</div>
 	
@@ -183,7 +183,6 @@
 			</div>
 		
 			<div id="results" class="block66">
-				<br><br>
 				<span id="answer"></span>
 				<span id="sourcelink"></span>
 				<span id="nextq"></span>
@@ -191,9 +190,12 @@
 	
 		</div><!-- /content -->
 	
-		<div id="footer" data-role="footer" data-position="fixed" class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
+                <div id="footer" data-role="footer" data-position="fixed" 
+                                 class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
 	    <div class="ui-btn-left" style="top:15px;color:grey">v02</div>
-	  	<h4 style="text-align:right" class="ui-title" role="heading" aria-level="1"><a id="sugbutton" onclick="gotofeedback();" class="ui-link-a">Suggestions?</a></h4>
+            <h4 style="text-align:right" class="ui-title" role="heading" aria-level="1">
+              <span id="sugbutton" onclick="gotofeedback();" class="ui-link-a" style="display: inline-block">Suggestions?</span>
+            </h4>
 	  </div>
 
 	</div>
