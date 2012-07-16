@@ -60,11 +60,11 @@
 		});
 
 		$('div[data-role="dialog"]').live('pageshow',function(e, ui){
-                        var txpos = $("#textarea1").offset();
+                        var txpos = $("#textarea").offset();
                         if (txpos != null) {
-                          var rxpos = $("#textarea1").position().top;
+                          var rxpos = $("#textarea").position().top;
                           $.mobile.silentScroll(txpos.top+rxpos);
-			  $('#textarea1').focus();		// by xiaozc
+			  $('#textarea').focus();		// by xiaozc
                         }
 		});
 
