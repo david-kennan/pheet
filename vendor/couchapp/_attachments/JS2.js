@@ -60,7 +60,12 @@
 		});
 
 		$('div[data-role="dialog"]').live('pageshow',function(e, ui){
-			$('#textarea').focus();		// by xiaozc
+                        var txpos = $("#textarea1").offset();
+                        if (txpos != null) {
+                          var rxpos = $("#textarea1").position().top;
+                          $.mobile.silentScroll(txpos.top+rxpos);
+			  $('#textarea1').focus();		// by xiaozc
+                        }
 		});
 
 	});
