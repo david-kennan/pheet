@@ -151,7 +151,7 @@
 
 		if(!$.cookie('toast')) {
 			$("<div class='ui-loader ui-overlay-shadow ui-body-a ui-corner-all'><h3 style='text-align: center;'>Tap any area to make your suggestion</h3></div>")
-    		.css({ "display":"block", "opacity":0.96, "left":"20%", "right":"20%"})
+    		.css({ "display":"block", "opacity":0.96, "left":"20%", "right":"20%", "z-index":getMaxZIndexButGear()+1 })
     		.appendTo($("body"))
     		.delay(2000)
     		.fadeOut(300, function(){
