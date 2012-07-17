@@ -75,8 +75,7 @@
 			if(nodeDataFetched === false){
 			
 				// BEGIN TEST
-				console.log("start data fetch");
-				
+//				console.log("start data fetch");
 //				$.getJSON("datafile.js",function(jsonZ){
 //					nodes = deepCopy(jsonZ.nodes);
 //					console.log("ACTUAL data fetch");
@@ -578,3 +577,10 @@
 		    }
 		});
 	}
+        
+       // var createURL = 'http://incrp.cloudant.com/quote/_design/01/_update/createNew';
+       // function savefeedback() {
+          
+      //  }
+
+    
