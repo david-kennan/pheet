@@ -5,7 +5,12 @@
   </head>
   <body>
     <script>
-      alert(Math.random());
+      var val = Math.round(Math.random());
+      if (val) {
+        window.location.href = "quotegame_v1.html";
+      } else {
+        window.location.href = "quotegame_v2.html";
+      }
     </script>
   </body>
 </html>
