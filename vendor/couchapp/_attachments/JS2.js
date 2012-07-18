@@ -1,4 +1,3 @@
-
 (function(){
 	var togglemode = false;
 	var nodeDataFetched = false;
@@ -152,20 +151,18 @@
 //				}
 			// activate that link as a dialog
 //			$('#dialog_blockwelcomeLayer').children([href="dialog_blockwelcome.html"]).click();
+                
+	$("<div class='ui-loader ui-overlay-shadow ui-body-a ui-corner-all'><h3 style='text-align: center;'>Tap any area to make your suggestion</h3></div>")
+    	.css({ "display":"block", "opacity":0.96, "left":"20%", "right":"20%", "z-index":getMaxZIndexButGear()+1 })
+    	.appendTo($("body"))
+    	.delay( Number((function(){if (!$.cookie('toast')) {return 3000;} else {return 2000;}})()) )
+    	.fadeOut(200, function(){
+       	  $(this).remove();
+    	});
+	$.cookie('toast', '1');
 
-		if(!$.cookie('toast')) {
-			$("<div class='ui-loader ui-overlay-shadow ui-body-a ui-corner-all'><h3 style='text-align: center;'>Tap any area to make your suggestion</h3></div>")
-    		.css({ "display":"block", "opacity":0.96, "left":"20%", "right":"20%", "z-index":getMaxZIndexButGear()+1 })
-    		.appendTo($("body"))
-    		.delay(2000)
-    		.fadeOut(300, function(){
-        	$(this).remove();
-    		});
-			$.cookie('toast', '1');
-		}
-
-			var z = getMaxZIndexButGear()+1;
-			$(":jqmData(role=dialog)").css('z-index', z);
+	var z = getMaxZIndexButGear()+1;
+	$(":jqmData(role=dialog)").css('z-index', z);
 	}
 
 	function showNodeList(e) {
@@ -207,6 +204,7 @@
 			var highlightBlockName = $(this).prop('id');
 			ZrawBlockName = highlightBlockName.replace("HighlightBlock", "");
 			Ztmptext = "\<div\>\<ol\>";
+                        window['kToggle']['activeBlock'] = ZrawBlockName;
 			nodeFound = false;
 			// locate nodes that are associated with this block and build drilldown snippet Ztmptext
 			$.each(nodes, function(key, val) { showNodeListRecursive(key, val); });
@@ -539,7 +537,7 @@
 		});
 		return zIndexMax;
 	}
-
+        
 	if(!window.kToggle){window['kToggle']={};}
 	window['kToggle']['toggle'] = toggle;
 	
@@ -557,30 +555,22 @@
 	window['kToggle']['getMaxZIndexButGear'] = getMaxZIndexButGear; // helpful in debugging
 })();
 
-
 	function gotofeedback() {
 	  	kToggle.toggle();
   		$('#sugbutton').html('Back to game');
 	}
 
-	function savefeedback() {
-		var doc = new Object();
-		doc.feedback = $('#textarea').val();
-		$.couch.db("quote").saveDoc(doc, {
-		    success: function(data) {
-//						console.log(data);
-		        console.log('Your suggestion submited successfully.');
-		    },
-		    error: function(status) {
-//						console.log(status);
-		        console.log('Your suggestion submited failed, please try again.');
-		    }
-		});
-	}
-        
-       // var createURL = 'http://incrp.cloudant.com/quote/_design/01/_update/createNew';
-       // function savefeedback() {
-          
-      //  }
-
-    
+       function savefeedback() {
+         var restFrag = '_update/createNewSuggestion';
+         var doc = new Object();
+         doc.page = "quiz";
+         doc.block = window['kToggle']['activeBlock'];
+         doc.version = 'v02';
+         doc.suggestion = $("#textarea").val();
+         var postData = JSON.stringify(doc);
+         $.post(restFrag, postData, 
+           function(data) {
+             console.log(data);
+           }, 
+         "json");
+       }
