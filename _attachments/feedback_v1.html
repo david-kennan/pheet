@@ -21,30 +21,33 @@
     <script type="text/javascript" src="vendor/couchapp/jQuery.twFile.js"></script>
 
     <script>
-					$(document).ready(function(){
-						$('#cancelbutton').click(function() {
-							window.opener = null;
-							window.close();
-						});
+      $(document).ready(function(){
+        $('#cancelbutton').click(function() {
+        window.opener = null;
+        window.close();
+      });
+      
+      $('#sendbutton').click(function() {
+          restFrag = '_update/createNewSuggestion';
+          var doc = new Object();
+          doc.page = "quiz";
+          doc.block = "NoBlock";
+          doc.version = 'v01'; 
+          doc.suggestion = $("#textarea1").val();
+          var postData = JSON.stringify(doc);
+          $.post(restFrag, postData, 
+          function(data) {
+            console.log(data);
+          },   
+          "json");
+          window.opener = null;
+          window.close();
+      });
 
-						$('#sendbutton').click(function() {
-							var doc = new Object();
-							doc.feedback = $('#textarea1').val();
-							$.couch.db("quote").saveDoc(doc, {
-							    success: function(data) {
-							        console.log('Your suggestion submited successfully.');
-											window.opener = null;
-											window.close();
-							    },
-							    error: function(status) {
-							        alert('Your suggestion submited failed, please try again.');
-							    }
-							});
-						});
+     });
+   </script>
 
-					});
-    </script>
- </head>
+   </head>
  <body>
         <!-- Home -->
         <div data-role="page" id="page1">

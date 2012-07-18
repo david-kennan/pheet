@@ -1,3 +1,5 @@
+// incrlib.js - increpreneur library main file
+
 (function(){
 	var togglemode = false;
 	var nodeDataFetched = false;
@@ -540,7 +542,6 @@
         
 	if(!window.kToggle){window['kToggle']={};}
 	window['kToggle']['toggle'] = toggle;
-	
 	window['kToggle']['inputNodeDialog'] = inputNodeDialog;
 	window['kToggle']['showNode'] = showNode;
 	window['kToggle']['submitNode'] = submitNode;
@@ -555,22 +556,22 @@
 	window['kToggle']['getMaxZIndexButGear'] = getMaxZIndexButGear; // helpful in debugging
 })();
 
-	function gotofeedback() {
-	  	kToggle.toggle();
-  		$('#sugbutton').html('Back to game');
-	}
+function gotofeedback() {
+  kToggle.toggle();
+  $('#sugbutton').html('Back to game');
+}
 
-       function savefeedback() {
-         var restFrag = '_update/createNewSuggestion';
-         var doc = new Object();
-         doc.page = "quiz";
-         doc.block = window['kToggle']['activeBlock'];
-         doc.version = 'v02';
-         doc.suggestion = $("#textarea").val();
-         var postData = JSON.stringify(doc);
-         $.post(restFrag, postData, 
-           function(data) {
-             console.log(data);
-           }, 
-         "json");
-       }
+function savefeedback() {
+  var restFrag = '_update/createNewSuggestion';
+  var doc = new Object();
+  doc.page = "quiz";
+  doc.block = window['kToggle']['activeBlock'];
+  doc.version = 'v02';
+  doc.suggestion = $("#textarea").val();
+  var postData = JSON.stringify(doc);
+  $.post(restFrag, postData, 
+      function(data) {
+        console.log(data);
+      }, 
+      "json");
+}
