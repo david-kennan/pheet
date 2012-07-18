@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Suggestions</title>
-        <link rel="stylesheet" href="style/jquery.mobile-1.1.0.css" />
-        <link rel="stylesheet" href="style/my.css" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Suggestions</title>
+    <link rel="stylesheet" href="style/jquery.mobile-1.1.0.css" />
+    <link rel="stylesheet" href="style/my.css" />
 
-				<link rel="stylesheet" type="text/css" href="style/CSS1.css" />
-				<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-				<script type="text/javascript" src="vendor/couchapp/JS1.js"></script>
-				<script type="text/javascript" src="vendor/couchapp/rsc.js"></script>
-			
-			  <script src="/_utils/script/sha1.js"></script>
-			  <script src="/_utils/script/json2.js"></script>
-			  <script src="vendor/couchapp/jquery.couch.js"></script>
-			  <script src="vendor/couchapp/jquery.couchLogin.js"></script>
-			  <script src="vendor/couchapp/jquery.couchProfile.js"></script>
-			  <script src="vendor/couchapp/md5.js"></script>
-			  <script src="vendor/couchapp/jquery.mobile-1.1.0.js"></script>
-				<script type="text/javascript" src="vendor/couchapp/jQuery.twFile.js"></script>
-			
-				<script>
+    <link rel="stylesheet" type="text/css" href="style/CSS1.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="vendor/couchapp/JS1.js"></script>
+    <script type="text/javascript" src="vendor/couchapp/rsc.js"></script>
+        
+    <script src="/_utils/script/sha1.js"></script>
+    <script src="/_utils/script/json2.js"></script>
+    <script src="vendor/couchapp/jquery.couch.js"></script>
+    <script src="vendor/couchapp/jquery.couchLogin.js"></script>
+    <script src="vendor/couchapp/jquery.couchProfile.js"></script>
+    <script src="vendor/couchapp/md5.js"></script>
+    <script src="vendor/couchapp/jquery.mobile-1.1.0.js"></script>
+    <script type="text/javascript" src="vendor/couchapp/jQuery.twFile.js"></script>
+
+    <script>
 					$(document).ready(function(){
 						$('#cancelbutton').click(function() {
 							window.opener = null;
@@ -33,43 +33,38 @@
 							doc.feedback = $('#textarea1').val();
 							$.couch.db("quote").saveDoc(doc, {
 							    success: function(data) {
-//							        console.log(data);
 							        console.log('Your suggestion submited successfully.');
 											window.opener = null;
 											window.close();
 							    },
 							    error: function(status) {
-//							        console.log(status);
 							        alert('Your suggestion submited failed, please try again.');
 							    }
 							});
 						});
 
 					});
-				</script>
-    </head>
-    <body>
+    </script>
+ </head>
+ <body>
         <!-- Home -->
         <div data-role="page" id="page1">
             <div data-role="content" style="padding: 15px">
                 <div>
-                    Your suggestions are very important to us, and will help us to improve our products. Please let us know about any problems, offer suggestions for improvement, or just write to say, Hi.
+                  Your suggestions are very important to us, and will help us to improve our products. Please let us know about any problems, 
+                  offer suggestions for improvement, or just write to say hello.
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="textarea1">
-                        </label>
-                        <textarea id="textarea1" placeholder="type your suggestion"></textarea>
+                        <label for="textarea1"></label>
+                        <textarea id="textarea1" placeholder="Type your suggestion here"></textarea>
                     </fieldset>
                 </div>
                 <div style="text-align: center;">
-	                <a id="cancelbutton" data-role="button" data-theme="b" data-inline="true" data-transition="fade" href="">Cancel</a>
-  	              <a id="sendbutton" data-role="button" data-theme="b" data-inline="true" data-transition="fade" href="">Send</a>
-  	            </div>
+                  <a id="cancelbutton" data-role="button" data-theme="b" data-inline="true" data-transition="fade" href="">Cancel</a>
+                  <a id="sendbutton" data-role="button" data-theme="b" data-inline="true" data-transition="fade" href="">Send</a>
+  	        </div>
             </div>
         </div>
-        <script>
-            //App custom javascript
-        </script>
-    </body>
+  </body>
 </html>

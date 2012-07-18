@@ -26,7 +26,7 @@
 	$(document).bind( "pageload", function( e, data ) {
 		// We only want to handle URLs that request our dialogs
 		var u = $.mobile.path.parseUrl( data.url ),
-		re = /dialog_/;
+		re = /feedback_v2/;
 		if ( u.filename.search(re) !== -1 ) {
 			// Call method that displays the correct data in the dialog on the fly 
 			displaynod( u, data.options );
@@ -190,7 +190,7 @@
 		if( togglemode == true ) {
 			var blockName = $(this).prop('id') + "SelectedBlock";
 			activeBlock = "#" + blockName;
-			var tmptext = "\<div id=\"" + blockName + "\"\>\<a href=\"dialog_a.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>";
+			var tmptext = "\<div id=\"" + blockName + "\"\>\<a href=\"feedback_v2.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>";
 			$(this).append(tmptext);
 			var blockSelector = "#" + blockName;
 			var z = getMaxZIndexButGear()+1;
@@ -223,7 +223,7 @@
 			//x += 7 + $(activeBlock).prop("clientHeight");
 			
 			// display the page-level annotation dialog, see logic in pageload handler above
-			$(blockSelector).children([href="dialog_a.html"]).click();
+			$(blockSelector).children([href="feedback_v2.html"]).click();
 			inShowNodeList = false;
 			// need to call hideNodeList() when that dialog is closed!
 			return;
