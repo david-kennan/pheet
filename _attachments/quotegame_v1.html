@@ -29,7 +29,7 @@
 		$(document).ready(function(){
 			page_bg = $('#page').css('background');
 			$('#page').css('background', 'black');
-			
+
 			// welcome announcement to the game and the test
 			// insert a link to a welcome dialog
 			if($('#dialog_welcomeLayer').length == 0) {
@@ -70,7 +70,6 @@
 
 		});
 
-
 		// this is a stub function that should really get data (in batches) from the network but does not yet have that ability
 		function displayQuestion() {
 			q += 1;
@@ -86,11 +85,6 @@
 
 		function gotofeedback() {
 			window.open("feedback_v1.html");
-		}
-
-		function adjustGearSize() {		// Added by xiaozc, to make the size of gear icon properly
-			var headerHeight = $('#intro').height();
-			$('#gear-status img').css('width', headerHeight).css('height', headerHeight);
 		}
 
 		function evalResponse(r) {
@@ -149,7 +143,7 @@
 	//end of Net code for deepCopy			
 			
 	</script>
-    <title>Election 2012 quote quiz</title>
+    <title>Election 2012</title>
 	</head>
   <body>
   <div data-role="page" id="page"> 
@@ -173,36 +167,37 @@
 
 	<div id="pageinfo" style="display:none">
   
-	<div id="intro" data-role="header" class="block66 ui-header ui-bar-a" role="banner">
+          <div id="intro" data-role="header" class="block66 ui-header ui-bar-a" role="banner">
+            <h3 class="ui-title" role="heading" aria-level="1">Election 2012</h3>
+          </div>
+
+          <div data-role="content" class="ui-content" role="main">
+
+          <div id="question" class="block66">
+            <b>Who said this on <span id="date"></span>?</b>
+            <br>
+            <i><span id="quote"></span></i>
+	    <br>
+	  </div>
+
+	  <div id="response" class="block66">
+	    <span id="answeroptions"></span>
+	  </div>
+
+	  <div id="results" class="block66">
+	    <span id="answer"></span>
+	    <span id="sourcelink"></span>
+	    <span id="nextq"></span>
+	  </div>
+
+        </div><!-- /content -->
 	
-		<h3 class="ui-title" role="heading" aria-level="1">Election 2012 Quote Quiz</h3>
-		</div>
-
-	<div data-role="content" class="ui-content" role="main">
-
-	<div id="question" class="block66">
-		Who said this on <span id="date"></span>?
-		<br><br><i>
-		<span id="quote"></span></i>
-		<br>
-		</div>
-
-	<div id="response" class="block66">
-		<span id="answeroptions"></span>
-		</div>
-	
-	<div id="results" class="block66">
-		<br><br>
-		<span id="answer"></span>
-		<span id="sourcelink"></span>
-		<span id="nextq"></span>
-		</div>
-
-		</div><!-- /content -->
-
-		<div id="footer" data-role="footer" data-position="fixed" class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
-	    <div class="ui-btn-left" style="top:15px;color:grey">v01</div>
-	  	<h4 style="text-align:right" class="ui-title" role="heading" aria-level="1"><a id="sugbutton" onclick="gotofeedback();" class="ui-link-a">Suggestions?</a></h4>
+                <div id="footer" data-role="footer" data-position="fixed" 
+                                 class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
+	    <div class="ui-btn-left" style="top:25px;color:grey">v01</div>
+            <h4 style="text-align:right" class="ui-title" role="heading" aria-level="1">
+              <span id="sugbutton" onclick="gotofeedback();" style="display: inline-block; height: 30px; margin-top:15px">Suggestions?</span>
+            </h4>
 	  </div>
 
 	</div>
