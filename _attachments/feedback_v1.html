@@ -37,11 +37,9 @@
           var postData = JSON.stringify(doc);
           $.post(restFrag, postData, 
           function(data) {
-            console.log(data);
-          },   
-          "json");
-          window.opener = null;
-          window.close();
+            window.opener = null;
+            window.close();
+          });
       });
 
      });
