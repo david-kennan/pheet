@@ -2,10 +2,23 @@
 <html>
   <head>
     <title>Election 2012</title>
-    <script>
-      Math.round(Math.random())?window.location.href="quotegame_v1.html":window.location.href="quotegame_v2.html";
-    </script>
   </head>
   <body>
+    <script>
+      Math.round(Math.random())?url="quotegame_v1.html":url="quotegame_v2.html";
+
+      // Detect browser and resize as necessary
+      var ua = navigator.userAgent;
+      var isMobile = /iPad/i.test(ua) || /iPhone/i.test(ua) || /Android/i.test(ua);
+      if (!isMobile) {
+        var el = document.createElement("iframe");
+        document.body.appendChild(el);
+        el.setAttribute('height', 480);
+        el.setAttribute('width', 320);
+        el.setAttribute('src', url);
+      } else {
+        window.location.href = url;
+      }
+    </script>
   </body>
 </html>
