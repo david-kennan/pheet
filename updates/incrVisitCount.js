@@ -15,7 +15,7 @@ function(doc, req) {
       doc.v2count += reqAttrs.v2c;
       doc.v1suggcount += reqAttrs.v1sc;
       doc.v2suggcount += reqAttrs.v2sc;
-      if (doc.v1count || doc.v2count) { doc.totalcount++; }
+      if (reqAttrs.v1c || reqAttrs.v2c) { doc.totalcount++; }
       return [doc, 'success: visitor counts updated\n'];
     } 
 }
