@@ -11,6 +11,7 @@
   <script type="text/javascript" src="vendor/couchapp/jquery.cookie.js"></script>
   <script type="text/javascript" src="vendor/couchapp/jquery.browser.min.js"></script>
   <script type="text/javascript" src="vendor/couchapp/incrlib.js"></script>
+  <script type="text/javascript" src="vendor/couchapp/util.js"></script>
   <script type="text/javascript" src="vendor/couchapp/rsc.js"></script>
 
   <script src="/_utils/script/sha1.js"></script>
@@ -70,7 +71,7 @@
 		        }
 		    });
 	    });
-
+                  registerUser(2);  // increment visitor count 
 		});
 
 		// this is a stub function that should really get data (in batches) from the network but does not yet have that ability
