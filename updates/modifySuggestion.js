@@ -13,9 +13,7 @@ function(doc, req) {
         modified = true;
     }
     if (modified) {
-        var dateModified = new Date();
-        var dateArray = [dateModified.getUTCFullYear(), dateModified.getUTCMonth() + 1, dateModified.getUTCDate(), dateModified.getUTCHours(), dateModified.getUTCMinutes(), dateModified.getUTCSeconds()];
-        doc.lastModified = dateArray;
+        doc.lastModified = new Date();
         return [doc, 'success: document updated'];
     }
     return [doc, 'no changes made'];
