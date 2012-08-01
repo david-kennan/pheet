@@ -6,6 +6,7 @@ function(doc, req) {
     newDoc.block = receivedObj.block;
     newDoc.suggestion = receivedObj.suggestion;
     newDoc.appVersion = receivedObj.version;
+    newDoc.userAgent = receivedObj.userAgent;
     var docCreation = new Date();
     var dateArray = [docCreation.getUTCFullYear(), docCreation.getUTCMonth() + 1, docCreation.getUTCDate(), docCreation.getUTCMinutes(), docCreation.getUTCSeconds()];
     newDoc.dateCreated = dateArray;

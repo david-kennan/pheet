@@ -9,8 +9,8 @@
 
     <link rel="stylesheet" type="text/css" href="style/CSS1.css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="vendor/couchapp/jquery.browser.min.js"></script>
     <script type="text/javascript" src="vendor/couchapp/rsc.js"></script>
-        
     <script src="/_utils/script/sha1.js"></script>
     <script src="/_utils/script/json2.js"></script>
     <script src="vendor/couchapp/jquery.couch.js"></script>
@@ -34,6 +34,7 @@
           doc.block = "NoBlock";
           doc.version = 'v01'; 
           doc.suggestion = $("#textarea1").val();
+          doc.userAgent = $.browser.name + "_" + $.browser.version + "_" + $.os.name;
           var postData = JSON.stringify(doc);
           $.post(restFrag, postData, 
           function(data) {
@@ -41,7 +42,6 @@
             window.close();
           });
       });
-
      });
    </script>
 

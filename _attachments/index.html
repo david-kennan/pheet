@@ -5,11 +5,19 @@
   </head>
   <body>
     <script>
-      var val = Math.round(Math.random());
-      if (val) {
-        window.location.href = "quotegame_v1.html";
+      Math.round(Math.random())?url="quotegame_v1.html":url="quotegame_v2.html";
+
+      // Detect browser and resize as necessary
+      var ua = navigator.userAgent;
+      var isMobile = /iPad/i.test(ua) || /iPhone/i.test(ua) || /Android/i.test(ua);
+      if (!isMobile) {
+        var el = document.createElement("iframe");
+        document.body.appendChild(el);
+        el.setAttribute('height', 480);
+        el.setAttribute('width', 320);
+        el.setAttribute('src', url);
       } else {
-        window.location.href = "quotegame_v2.html";
+        window.location.href = url;
       }
     </script>
   </body>
