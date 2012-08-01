@@ -8,8 +8,9 @@
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" type="text/css">        
 	<link rel="stylesheet" type="text/css" href="style/CSS1.css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="vendor/couchapp/jquery.cookie.js"></script>
-	<script type="text/javascript" src="vendor/couchapp/incrlib.js"></script>
+      <script type="text/javascript" src="vendor/couchapp/jquery.cookie.js"></script>
+      <script type="text/javascript" src="vendor/couchapp/incrlib.js"></script>
+      <script type="text/javascript" src="vendor/couchapp/tracklib.js"></script>
 	<script type="text/javascript" src="vendor/couchapp/rsc.js"></script>
 
   <script src="/_utils/script/sha1.js"></script>
@@ -38,14 +39,20 @@
 			}
 			// activate that link as a dialog
 			$('#dialog_welcomeLayer').children([href="#dialog_welcome"]).click();
-            
-            // This code isn't working
-            /*$('#dialog_welcomeLayer').live('dialogclose', function() {
-                _paq.push('[trackGoal]', 6);
-            });*/
+            $(".ui-dialog-titlebar-close", $('#dialog_welcomeLayer').parent()).hide();
+                          
+                          $(window).bind("beforeunload", function () {
+                                         return confirm("Do you really want to close?");
+                                         });
 
 	    $('#playbutton').click(function(event) {
-            _paq.push(['trackGoal', 1]); // Goal: Play Game Clicks
+            $('#dialog_welcomeLayer').UiBtnIconNoText = "display:none";
+            //_paq.push(['trackGoal', 1]); 
+            //piwikTracker.trackGoal(1);
+            trackEvent(1); // Goal: Play Game Clicks
+//            _paq.push(['setCustomVariable', 'Version', 'V02', 1, 'visit']);
+                               
+                               //_paq.push(['setCustomVariable','1','VisitorType','Member']);
 		    $db = $.couch.db("quote");
 		    $db.view("pheet/question",
 		      { success: function( data ) {
@@ -75,7 +82,7 @@
 		        }
 		    });
 	    });
-
+                          setKPI('Version', 'V02');
 		});
 
 		// this is a stub function that should really get data (in batches) from the network but does not yet have that ability
@@ -96,17 +103,19 @@
 			var responsearray = {};
 			responsearray[0] = j[q]["person1"];
 			responsearray[1] = j[q]["person2"];
-            _paq.push(['trackGoal', 4]); // Goal: Answer Clicked
+            //_paq.push(['trackGoal', 4]); 
+            trackEvent(4); // Goal: Answer Clicked
 			if( j[q]["answer"] == responsearray[r-1]){
 				document.getElementById("answer").textContent = "Correct!";
 			} else {
 				document.getElementById("answer").textContent = "Wrong!";
 			}
 			//show source link
-			document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\">Source</a>";
-            //document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"_paq.push(['trackGoal', 3])\">Source</a>";
+			//document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\">Source</a>";
+            //document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"piwikTracker.trackGoal(3)\">Source</a>";
+            document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"trackEvent(3)\" target=\"_blank\">Source</a>";
 			// add a button to ask next question
-			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"_paq.push(['trackGoal', 2]); displayQuestion()\" />"; // Goal: Next Question Clicks
+			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"trackEvent(2); displayQuestion()\" />"; // Goal: Next Question Clicks
 			$('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
 			}
 			
@@ -149,26 +158,29 @@
 	//end of Net code for deepCopy			
 			
 	</script>
-    <title>Election 2012</title>
-	</head>
-    <!-- Piwik, From Piwik's documentation --> 
-    <script type="text/javascript">
+    <!--script>
         var _paq = _paq || [];
-        (function(){ var u=(("https:" == document.location.protocol) ? "https://localhost/piwik/" : "http://localhost/piwik/");
-         document.write(unescape("%3Cscript src='" + u + "piwik.js' type='text/javascript'%3E%3C/script%3E")); // this is essential
+        //(function(){ 
+         var u=(("https:" == document.location.protocol) ? "https://localhost/piwik/" : "http://localhost/piwik/");
+         //document.write(unescape("%3Cscript src='" + u + "piwik.js' type='text/javascript'%3E%3C/script%3E")); // this is essential
+         var piwikTracker = Piwik.getTracker(u + "piwik.php", 1);
+         piwikTracker.trackPageView();
          _paq.push(['setSiteId', 1]);
          _paq.push(['setTrackerUrl', u+'piwik.php']);
          //_paq.push(['trackPageView']);
          _paq.push(['enableLinkTracking']);
          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src=u+'piwik.js';
-         s.parentNode.insertBefore(g,s); })();
-        </script>
-    <!-- End Piwik Code -->
+         //s.parentNode.insertBefore(g,s); 
+         //})();
+    </script-->
+    <title>Election 2012</title>
+	</head>
   <body>
   <div data-role="page" id="page"> 
 	</div><!-- /page -->  	 
 
 	<div id="dialog_welcome" data-rel="dialog" data-role="dialog">
+        <style>.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none;} </style>
 		<div data-role="header" data-theme="d">
 			<h1>The challenge</h1>
 			</div>
@@ -215,7 +227,7 @@
                                  class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
 	    <div class="ui-btn-left" style="top:25px;color:grey">v02</div>
             <h4 style="text-align:right" class="ui-title" role="heading" aria-level="1">
-              <span id="sugbutton" onclick="_paq.push(['trackGoal', 5]); gotofeedback(); " style="display: inline-block; height: 30px; margin-top:15px">Suggestions?</span> <!-- Goal: Suggestions Clicked -->
+              <span id="sugbutton" onclick="gotofeedback(); " style="display: inline-block; height: 30px; margin-top:15px">Suggestions?</span> <!-- Goal: Suggestions Clicked -->
             </h4>
 	  </div>
 

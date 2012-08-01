@@ -32,6 +32,7 @@
 		if ( u.filename.search(re) !== -1 ) {
 			// Call method that displays the correct data in the dialog on the fly 
 			displaynod( u, data.options );
+                     console.log("inside if statement");
 		}
 	});
 	
@@ -104,11 +105,15 @@
 			$('#sugbutton').css('z-index',z);
 			showBlocks();
 			togglemode = true;
+ 
+            trackEvent(5);
 		} else {
 //			$('#gear-status')[0].innerHTML = "\<img src=\"style\/img\/gear-unselected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
 			togglemode = false;
 			blocksShowing = false;
 			$('#showBlocksLayer').remove();
+ 
+            trackEvent(9);
 		}
 	}
 
@@ -139,11 +144,12 @@
 		for (var i=0;i<getObjectLength(blocks);i++){
 			blocks[i].id;
 			var blockName = blocks[i].id + "HighlightBlock";
-			var blockSelector = "#" + blockName;
-			var tmptext = "\<div id=\"" + blockName + "\"\>\<\/div\>";
+			var blockSelector = "#" + blockName + "overlay";
+			var tmptext = "\<div id=\"" + blockName + "overlay\"\>\<\/div\>";
 			$('#showBlocksLayer').append(tmptext);
 			$(blockSelector).css({'position': 'absolute', 'z-index': z, 'top': blocks[i].top, 'left': blocks[i].left, 'height': blocks[i].height + 'px', 'width': blocks[i].width + 'px', 'border': '1px dashed #f11'});
-			$(blockSelector).on('click', showNodeList);
+ $(blockSelector).one('click', showNodeList);
+ //$(blockSelector).live('click', showNodeList);
 		}
 
 			// quick tutorial on the page blocks
@@ -168,6 +174,9 @@
 	}
 
 	function showNodeList(e) {
+ //console.log('hi');
+ //_paq.push(['trackGoal', 7]);
+ trackEvent(7); // Goal: Red Box Clicked
 		var posx = 0;
 		var posy = 0;
 		if (!e) var e = window.event;
