@@ -1,4 +1,4 @@
-// hacked tracking - prior to piwik this was the olny method to track how many
+// hacked tracking - prior to piwik this was the only method to track how many
 // users we had
 function registerUser(version) {
   var restFrag = '_update/incrVisitCount/visitCounts';
