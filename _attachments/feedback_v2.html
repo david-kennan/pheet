@@ -7,6 +7,7 @@
 </head> 
 <body> 
 <div id="dialog_a" data-role="dialog">
+    <style>.ui-dialog .ui-header .ui-btn-icon-notext { display:inline;} </style>
 	<div data-role="header" data-theme="d">
 		<h1>Suggestions</h1>
 		</div>
@@ -17,7 +18,7 @@
 					<label for="textarea"></label>
 					<textarea name="textarea" id="textarea" placeholder="Type your suggestion here"></textarea>
 				</div>
-				<div style="text-align: center;"><a id="sendbutton" data-role="button" data-rel="back" data-theme="b" data-inline="true" onclick="trackEvent(8); savefeedback();">Submit</a></div>
+				<div style="text-align: center;"><a id="sendbutton" data-role="button" data-rel="back" data-theme="b" data-inline="true" onclick="savefeedback();">Submit</a></div>
 			</div>
                         <!--<span id="nodeDisplay"></span>-->
 		</div>

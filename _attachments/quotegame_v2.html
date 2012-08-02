@@ -5,34 +5,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
   <link rel="stylesheet" href="style/main.css" type="text/css">
+      <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+      <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" type="text/css">        
 	<link rel="stylesheet" type="text/css" href="style/CSS1.css" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
       <script type="text/javascript" src="vendor/couchapp/jquery.cookie.js"></script>
-      <script type="text/javascript" src="vendor/couchapp/incrlib.js"></script>
-      <script type="text/javascript" src="vendor/couchapp/tracklib.js"></script>
-	<script type="text/javascript" src="vendor/couchapp/rsc.js"></script>
-  <link rel="stylesheet" type="text/css" href="style/CSS1.css" />
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript" src="vendor/couchapp/jquery.cookie.js"></script>
   <script type="text/javascript" src="vendor/couchapp/jquery.browser.min.js"></script>
-  <script type="text/javascript" src="vendor/couchapp/incrlib.js"></script>
-  <script type="text/javascript" src="vendor/couchapp/util.js"></script>
-  <script type="text/javascript" src="vendor/couchapp/rsc.js"></script>
-
-  <script src="/_utils/script/sha1.js"></script>
-  <script src="/_utils/script/json2.js"></script>
   <script src="vendor/couchapp/jquery.couch.js"></script>
   <script src="vendor/couchapp/jquery.couchLogin.js"></script>
   <script src="vendor/couchapp/jquery.couchProfile.js"></script>
-  <script src="vendor/couchapp/md5.js"></script>
-  <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 	<script type="text/javascript" src="vendor/couchapp/jQuery.twFile.js"></script>
-       
+  <script src="/_utils/script/sha1.js"></script>
+  <script src="/_utils/script/json2.js"></script>
+  <script src="vendor/couchapp/md5.js"></script>
+      <script type="text/javascript" src="vendor/couchapp/rsc.js"></script>
+      <script type="text/javascript" src="vendor/couchapp/util.js"></script>
+      <script type="text/javascript" src="vendor/couchapp/incrlib.js"></script>
+      <script type="text/javascript" src="vendor/couchapp/tracklib.js"></script>
+	   
 	<script>	
 		// read data from a local file. later, modify to read from server
 		var j = {}; // store questions from JSON data
 		var q = 0; // counter for questions in gameplay
+        var correct = 0; // counter for questions correct
 		var page_bg = $('#page').css('background');
 
 		$(document).ready(function(){
@@ -47,19 +42,10 @@
 			// activate that link as a dialog
 			$('#dialog_welcomeLayer').children([href="#dialog_welcome"]).click();
             $(".ui-dialog-titlebar-close", $('#dialog_welcomeLayer').parent()).hide();
-                          
-                          $(window).bind("beforeunload", function () {
-                                         return confirm("Do you really want to close?");
-                                         });
 
 	    $('#playbutton').click(function(event) {
             $('#dialog_welcomeLayer').UiBtnIconNoText = "display:none";
-            //_paq.push(['trackGoal', 1]); 
-            //piwikTracker.trackGoal(1);
-            trackEvent(1); // Goal: Play Game Clicks
-//            _paq.push(['setCustomVariable', 'Version', 'V02', 1, 'visit']);
-                               
-                               //_paq.push(['setCustomVariable','1','VisitorType','Member']);
+            trackEvent(1); // Play Button Clicked
 		    $db = $.couch.db("quote");
 		    $db.view("pheet/question",
 		      { success: function( data ) {
@@ -105,25 +91,33 @@
 			document.getElementById("sourcelink").textContent = "";
 			document.getElementById("nextq").textContent = "";
 			}
-
+        
+        
+        var responseScored = false; // Required so that multiple answer clicks do not get added into the user's score
 		function evalResponse(r) {
 			// should test for proper input here, improve that
 			var responsearray = {};
 			responsearray[0] = j[q]["person1"];
 			responsearray[1] = j[q]["person2"];
-            //_paq.push(['trackGoal', 4]); 
-            trackEvent(4); // Goal: Answer Clicked
+            trackEvent(4); // Answer Clicked
 			if( j[q]["answer"] == responsearray[r-1]){
 				document.getElementById("answer").textContent = "Correct!";
+                if (!responseScored) {
+                    correct++;
+                }
 			} else {
 				document.getElementById("answer").textContent = "Wrong!";
 			}
+            responseScored = true;
+            var pctScore = correct / (q+1) * 100;
+            document.getElementById("score").textContent = "Score: " + (Math.round(100 * pctScore)/100).toFixed(2) + "%";
+            setKPI('Score', pctScore);
+            setKPI('Questions Answered', q+1);
+            
 			//show source link
-			//document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\">Source</a>";
-            //document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"piwikTracker.trackGoal(3)\">Source</a>";
             document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"trackEvent(3)\" target=\"_blank\">Source</a>";
 			// add a button to ask next question
-			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"trackEvent(2); displayQuestion()\" />"; // Goal: Next Question Clicks
+			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"responseScored = false; trackEvent(2); displayQuestion()\" />";
 			$('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
 			}
 			
@@ -213,6 +207,11 @@
 	    <span id="sourcelink"></span>
 	    <span id="nextq"></span>
 	  </div>
+      
+      <div id="score" class="block66">
+          <b>Score: 0.00%</b>
+          <br>
+        </div>
 
         </div><!-- /content -->
 	

@@ -26,6 +26,7 @@
 		// read data from a local file. later, modify to read from server
 		var j = {}; // store questions from JSON data
 		var q = 0; // counter for questions in gameplay
+        var correct = 0; // counter for questions correct
 		var page_bg = $('#page').css('background');
 
 		$(document).ready(function(){
@@ -71,6 +72,7 @@
 		        }
 		    });
 	    });
+                          setKPI('Version', 'V01');
                   registerUser(1); // increment visitor count
 		});
 
@@ -90,7 +92,8 @@
 		function gotofeedback() {
 			window.open("feedback_v1.html");
 		}
-
+        
+        var responseScored = false; // Required so that multiple answer clicks do not get added into the user's score
 		function evalResponse(r) {
 			// should test for proper input here, improve that
 			var responsearray = {};
@@ -101,13 +104,22 @@
             
 			if( j[q]["answer"] == responsearray[r-1]){
 				document.getElementById("answer").textContent = "Correct!";
+                if (!responseScored) {
+                    correct++;
+                }
 			} else {
 				document.getElementById("answer").textContent = "Wrong!";
 			}
+            responseScored = true;
+            var pctScore = correct / (q+1) * 100;
+            document.getElementById("score").textContent = "Score: " + (Math.round(100 * pctScore)/100).toFixed(2) + "%";
+            setKPI('Score', pctScore);
+            setKPI('Questions Answered', q+1);
+            
 			//show source link
 			document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"trackEvent(3)\" target=\"_blank\">Source</a>";
 			// add a button to ask next question
-			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"trackEvent(2); displayQuestion()\" />";
+			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"responseScored = false; trackEvent(2); displayQuestion()\" />";
 			$('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
 			}
 			
@@ -156,7 +168,8 @@
   <div data-role="page" id="page"> 
 	</div><!-- /page -->  	 
 
-	<div id="dialog_welcome" data-rel="dialog" data-role="dialog">
+      <div id="dialog_welcome" data-rel="dialog" data-role="dialog">
+          <style>.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none;} </style>
 		<div data-role="header" data-theme="d">
 			<h1>The challenge</h1>
 			</div>
@@ -196,6 +209,10 @@
 	    <span id="sourcelink"></span>
 	    <span id="nextq"></span>
 	  </div>
+              <div id="score" class="block66">
+                  <b>Score: 0.00%</b>
+                  <br>
+              </div>
 
         </div><!-- /content -->
 	
@@ -203,7 +220,7 @@
                                  class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
 	    <div class="ui-btn-left" style="top:25px;color:grey">v01</div>
             <h4 style="text-align:right" class="ui-title" role="heading" aria-level="1">
-              <span id="sugbutton" onclick="gotofeedback();registerSugg(1);" style="cursor:pointer; display: inline-block; height: 30px; margin-top:15px">Suggestions?</span>
+              <span id="sugbutton" onclick="trackEvent(8); gotofeedback();registerSugg(1);" style="cursor:pointer; display: inline-block; height: 30px; margin-top:15px">Suggestions?</span>
             </h4>
 	  </div>
 

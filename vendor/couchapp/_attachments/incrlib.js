@@ -32,7 +32,6 @@
 		if ( u.filename.search(re) !== -1 ) {
 			// Call method that displays the correct data in the dialog on the fly 
 			displaynod( u, data.options );
-                     console.log("inside if statement");
 		}
 	});
 	
@@ -45,6 +44,18 @@
 		if ( u == "dialog" ) {
 			 // Call method that displays the correct data in the dialog on the fly 
 			 hideNodeList();
+             if (e.target.getAttribute("id") == "dialog_a") {
+                if ($("#textarea").val() != "") {
+                     trackEvent(9); // Suggestions Text Entered
+                }
+                if (savingFeedback) {
+                     trackEvent(7); // Submit Clicked
+                     savingFeedback = false;
+                }
+                else {
+                     trackEvent(10); // Suggestions Dialog Closed
+                }
+             }
 		}
 	});
 
@@ -106,14 +117,14 @@
 			showBlocks();
 			togglemode = true;
  
-            trackEvent(5);
+            trackEvent(8); // Suggestions Clicked
 		} else {
 //			$('#gear-status')[0].innerHTML = "\<img src=\"style\/img\/gear-unselected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
 			togglemode = false;
 			blocksShowing = false;
 			$('#showBlocksLayer').remove();
  
-            trackEvent(9);
+            trackEvent(6); // Back to Game Clicked
 		}
 	}
 
@@ -174,9 +185,6 @@
 	}
 
 	function showNodeList(e) {
- //console.log('hi');
- //_paq.push(['trackGoal', 7]);
- trackEvent(7); // Goal: Red Box Clicked
 		var posx = 0;
 		var posy = 0;
 		if (!e) var e = window.event;
@@ -199,6 +207,7 @@
 
 		if( inShowNodeList) return; else inShowNodeList = true;
 		if( togglemode == true ) {
+            trackEvent(5); // Red box clicked
 			var blockName = $(this).prop('id') + "SelectedBlock";
 			activeBlock = "#" + blockName;
 			var tmptext = "\<div id=\"" + blockName + "\"\>\<a href=\"feedback_v2.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>";
@@ -570,7 +579,10 @@ function gotofeedback() {
   $('#sugbutton').html('Back to game');
 }
 
+var savingFeedback = false; // used to differentiate between user clicking Submit and user closing the dialog (see pagehide handler)
+
 function savefeedback() {
+    savingFeedback = true;
   var restFrag = '_update/createNewSuggestion';
   var doc = new Object();
   doc.page = "quiz";
