@@ -36,7 +36,6 @@
             trackEvent(9); // Suggestions Text Entered
           }
           trackEvent(7); // Submit Clicked
-          doc.userAgent = $.browser.name + "_" + $.browser.version + "_" + $.os.name;
           var postData = JSON.stringify(doc);
           $.post(restFrag, postData, 
           function(data) {

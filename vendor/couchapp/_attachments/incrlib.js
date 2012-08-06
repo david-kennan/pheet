@@ -589,7 +589,6 @@ function savefeedback() {
   doc.block = window['kToggle']['activeBlock'];
   doc.version = 'v02';
   doc.suggestion = $("#textarea").val();
-  doc.userAgent = $.browser.name + "_" + $.browser.version + "_" + $.os.name;
   var postData = JSON.stringify(doc);
   $.post(restFrag, postData, 
       function(data) {
