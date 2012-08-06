@@ -36,7 +36,8 @@
 			// activate that link as a dialog
 			$('#dialog_welcomeLayer').children([href="#dialog_welcome"]).click();
             $(".ui-dialog-titlebar-close", $('#dialog_welcomeLayer').parent()).hide();
-
+                          
+            
 	    $('#playbutton').click(function(event) {
             $('#dialog_welcomeLayer').UiBtnIconNoText = "display:none";
             trackEvent(1); // Play Button Clicked
@@ -160,7 +161,6 @@
 	</div><!-- /page -->  	 
 
 	<div id="dialog_welcome" data-rel="dialog" data-role="dialog">
-        <style>.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none;} </style>
 		<div data-role="header" data-theme="d">
 			<h1>The challenge</h1>
 			</div>
