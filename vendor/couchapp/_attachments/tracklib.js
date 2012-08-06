@@ -4,7 +4,7 @@ var _paq = _paq || [];
 _paq.push(['setSiteId', 1]);
 _paq.push(['setTrackerUrl', 'http://' + document.location.hostname + '/piwik/piwik.php']);
 _paq.push(['enableLinkTracking']);
-var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='vendor/couchapp/piwik.js';
+var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='vendor/couchapp/piwik.min.js';
 s.parentNode.insertBefore(g,s); 
 
 var customVars = []; // an array for associating the keys that the user passes with the index passed to the setCustomVariable function

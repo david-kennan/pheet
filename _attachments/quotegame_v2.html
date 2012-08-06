@@ -8,216 +8,207 @@
     <link rel="stylesheet" type="text/css" href="style/main.css">
     <link rel="stylesheet" type="text/css" href="style/CSS1.css" />
 
-    <script src="vendor/couchapp/jquery-1.7.1.min.js"></script>
-    <script src="vendor/couchapp/jquery.mobile-1.1.0.min.js"></script>
-    <script src="vendor/couchapp/jquery.couch.min.js"></script>
-    <script src="vendor/couchapp/jquery.cookie.min.js"></script>
-    <script src="vendor/couchapp/json2.min.js"></script>
-    <script src="vendor/couchapp/rsc.js"></script>
-    <script src="vendor/couchapp/incrlib.js"></script>
-    <script src="vendor/couchapp/tracklib.js"></script>
+    <!-- Load Necessary Libraries -->
+    <script type="text/javascript">var loader_app_version=2;</script>
+    <script src="vendor/couchapp/head.min.js"></script>
+    <script src="vendor/couchapp/loader.js"></script>
 
     <script>	
-		// read data from a local file. later, modify to read from server
-		var j = {}; // store questions from JSON data
-		var q = 0; // counter for questions in gameplay
-        var correct = 0; // counter for questions correct
-		var page_bg = $('#page').css('background');
+      var j = {}; // store questions from JSON data
+      var q = 0; // counter for questions in gameplay
+      var correct = 0; // counter for questions correct
 
-		$(document).ready(function(){
-			page_bg = $('#page').css('background');
-			$('#page').css('background', 'black');
+      head.ready(function() { // execute once loader complete
+        $(document).ready(function(){
+          page_bg = $('#page').css('background');
+          $('#page').css('background', 'black');
 
-			// welcome announcement to the game and the test
-			// insert a link to a welcome dialog
-			if($('#dialog_welcomeLayer').length == 0) {
-				$(document.body).append("\<div id=\"dialog_welcomeLayer\"\>\<a href=\"#dialog_welcome\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
-			}
-			// activate that link as a dialog
-			$('#dialog_welcomeLayer').children([href="#dialog_welcome"]).click();
-            $(".ui-dialog-titlebar-close", $('#dialog_welcomeLayer').parent()).hide();
-                          
-            
-	    $('#playbutton').click(function(event) {
-            $('#dialog_welcomeLayer').UiBtnIconNoText = "display:none";
-            trackEvent(1); // Play Button Clicked
-		    $db = $.couch.db("quote");
-		    $db.view("pheet/question",
-		      { success: function( data ) {
-		          var json = data.rows[0].value;
+          // welcome announcement to the game and the test
+          // insert a link to a welcome dialog
+          if($('#dialog_welcomeLayer').length == 0) {
+            $(document.body).append("\<div id=\"dialog_welcomeLayer\"\>\<a href=\"#dialog_welcome\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>");
+              }
+              // activate that link as a dialog
+              $('#dialog_welcomeLayer').children([href="#dialog_welcome"]).click();
+              $(".ui-dialog-titlebar-close", $('#dialog_welcomeLayer').parent()).hide();
 
-				    	$('#page').css('background', page_bg);
-		  			  $('#page').append($('#pageinfo').html()).trigger('create');
-		  			  $('#pageinfo').empty();		// This line is needed to make red block shown correctly. by xiaozc
-		  			 	$('#sugbutton').removeClass('ui-link');
 
-							// menu stuff
-							$('.myMenu > li').bind('mouseover', openSubMenu);
-							$('.myMenu > li').bind('mouseout', closeSubMenu);
-							function openSubMenu() {
-								$(this).find('ul').css('visibility', 'visible');	
-							};
-							function closeSubMenu() {
-								$(this).find('ul').css('visibility', 'hidden');	
-							};
-							
-							// get question data and begin game
-							j = deepCopy(json.questions);
-							q = -1;
-							displayQuestion();
+              $('#playbutton').click(function(event) {
+                $('#dialog_welcomeLayer').UiBtnIconNoText = "display:none";
+                trackEvent(1); // Play Button Clicked
+                $db = $.couch.db("quote");
+                $db.view("pheet/question",
+                { success: function( data ) {
+                    var json = data.rows[0].value;
 
-							$.mobile.changePage($('#page'), 'pop', false, true);
-		        }
-		    });
-	    });
-                          setKPI('Version', 'V02');
-		});
+                    $('#page').css('background', page_bg);
+                    $('#page').append($('#pageinfo').html()).trigger('create');
+                    $('#pageinfo').empty();		// This line is needed to make red block shown correctly. by xiaozc
+                    $('#sugbutton').removeClass('ui-link');
 
-		// this is a stub function that should really get data (in batches) from the network but does not yet have that ability
-		function displayQuestion() {
-			q += 1;
-			document.getElementById("date").textContent = j[q]["date"];
-			document.getElementById("quote").textContent = "\"" + j[q]["quote"] + "\"";
-			document.getElementById("response").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"answerButton1\" value=\"" + j[q]["person1"] + "\" onclick=\"evalResponse(1)\" /><input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"answerButton2\" value=\"" + j[q]["person2"] + "\" onclick=\"evalResponse(2)\" />";
-			$('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
-			// clear result of previous questions from display
-			document.getElementById("answer").textContent = "";
-			document.getElementById("sourcelink").textContent = "";
-			document.getElementById("nextq").textContent = "";
-			}
-        
-        
-        var responseScored = false; // Required so that multiple answer clicks do not get added into the user's score
-		function evalResponse(r) {
-			// should test for proper input here, improve that
-			var responsearray = {};
-			responsearray[0] = j[q]["person1"];
-			responsearray[1] = j[q]["person2"];
+                    // menu stuff
+                    $('.myMenu > li').bind('mouseover', openSubMenu);
+                    $('.myMenu > li').bind('mouseout', closeSubMenu);
+                    function openSubMenu() {
+                      $(this).find('ul').css('visibility', 'visible');	
+                    };
+                    function closeSubMenu() {
+                      $(this).find('ul').css('visibility', 'hidden');	
+                    };
+
+                    // get question data and begin game
+                    j = deepCopy(json.questions);
+                    q = -1;
+                    displayQuestion();
+
+                    $.mobile.changePage($('#page'), 'pop', false, true);
+                  }
+                });
+              });
+              setKPI('Version', 'V02');
+            });
+          }); // loader ready end	
+          // this is a stub function that should really get data (in batches) from the network but does not yet have that ability
+          function displayQuestion() {
+            q += 1;
+            document.getElementById("date").textContent = j[q]["date"];
+            document.getElementById("quote").textContent = "\"" + j[q]["quote"] + "\"";
+            document.getElementById("response").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"answerButton1\" value=\"" + j[q]["person1"] + "\" onclick=\"evalResponse(1)\" /><input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"answerButton2\" value=\"" + j[q]["person2"] + "\" onclick=\"evalResponse(2)\" />";
+            $('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
+            // clear result of previous questions from display
+            document.getElementById("answer").textContent = "";
+            document.getElementById("sourcelink").textContent = "";
+            document.getElementById("nextq").textContent = "";
+          }
+
+
+          var responseScored = false; // Required so that multiple answer clicks do not get added into the user's score
+          function evalResponse(r) {
+            // should test for proper input here, improve that
+            var responsearray = {};
+            responsearray[0] = j[q]["person1"];
+            responsearray[1] = j[q]["person2"];
             trackEvent(4); // Answer Clicked
-			if( j[q]["answer"] == responsearray[r-1]){
-				document.getElementById("answer").textContent = "Correct!";
-                if (!responseScored) {
-                    correct++;
-                }
-			} else {
-				document.getElementById("answer").textContent = "Wrong!";
-			}
+            if( j[q]["answer"] == responsearray[r-1]){
+              document.getElementById("answer").textContent = "Correct!";
+              if (!responseScored) {
+                correct++;
+              }
+              } else {
+              document.getElementById("answer").textContent = "Wrong!";
+            }
             responseScored = true;
             var pctScore = correct / (q+1) * 100;
             document.getElementById("score").textContent = "Score: " + (Math.round(100 * pctScore)/100).toFixed(2) + "%";
             setKPI('Score', pctScore);
             setKPI('Questions Answered', q+1);
-            
-			//show source link
+
+            //show source link
             document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"trackEvent(3)\" target=\"_blank\">Source</a>";
-			// add a button to ask next question
-			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"responseScored = false; trackEvent(2); displayQuestion()\" />";
-			$('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
-			}
-			
-	// This code is from the Net
-	function deepCopy(obj) {
-		if (typeof obj == 'object') {
-			if (isArray(obj)) {
-				var l = obj.length;
-				var r = new Array(l);
-				for (var i = 0; i < l; i++) {
-					r[i] = deepCopy(obj[i]);
-				}
-				return r;
-			} else {
-				var r = {};
-				r.prototype = obj.prototype;
-				for (var k in obj) {
-					r[k] = deepCopy(obj[k]);
-				}
-				return r;
-			}
-		}
-		return obj;
-	}
+            // add a button to ask next question
+            document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"responseScored = false; trackEvent(2); displayQuestion()\" />";
+            $('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
+          }
 
-	// This code is from the Net
-	// This function is a helper for deepCopy
-	var ARRAY_PROPS = {length: 'number', sort: 'function', slice: 'function', splice: 'function'};
-	/* Determining if something is an array in JavaScript is error-prone at best. */
-	function isArray(obj) {
-		if (obj instanceof Array)
-			return true;
-		// Otherwise, guess:
-		for (var k in ARRAY_PROPS) {
-			if (!(k in obj && typeof obj[k] == ARRAY_PROPS[k]))
-				return false;
-		}
-		return true;
-	}
-	//end of Net code for deepCopy			
-			
-	</script>
-    <title>Election 2012</title>
-	</head>
-  <body>
-  <div data-role="page" id="page"> 
-	</div><!-- /page -->  	 
+          // This code is from the Net
+          function deepCopy(obj) {
+            if (typeof obj == 'object') {
+              if (isArray(obj)) {
+                var l = obj.length;
+                var r = new Array(l);
+                for (var i = 0; i < l; i++) {
+                  r[i] = deepCopy(obj[i]);
+                }
+                return r;
+                } else {
+                var r = {};
+                r.prototype = obj.prototype;
+                for (var k in obj) {
+                  r[k] = deepCopy(obj[k]);
+                }
+                return r;
+              }
+            }
+            return obj;
+          }
 
-	<div id="dialog_welcome" data-rel="dialog" data-role="dialog">
-		<div data-role="header" data-theme="d">
-			<h1>The challenge</h1>
-			</div>
-		<div data-role="content" data-theme="c">
-			Can you identify a candidate by their quotes? Not so easy!
-			<br>
-			<br>
-			<div style="text-align: center;"><a id="playbutton" data-role="button" data-inline="true" data-theme="b">Play Now!</a></div>
-			<br>
-			<br>
-			Please please please use the suggestions link!
-			</div>
-	</div>
+          // This code is from the Net
+          // This function is a helper for deepCopy
+          var ARRAY_PROPS = {length: 'number', sort: 'function', slice: 'function', splice: 'function'};
+          /* Determining if something is an array in JavaScript is error-prone at best. */
+          function isArray(obj) {
+            if (obj instanceof Array)
+            return true;
+            // Otherwise, guess:
+            for (var k in ARRAY_PROPS) {
+              if (!(k in obj && typeof obj[k] == ARRAY_PROPS[k]))
+              return false;
+            }
+            return true;
+          }
+          //end of Net code for deepCopy			
+        </script>
+        <title>Election 2012</title>
+      </head>
+      <body>
+        <div data-role="page" id="page"> 
+        </div><!-- /page -->  	 
+
+        <div id="dialog_welcome" data-rel="dialog" data-role="dialog" style="visibility: hidden;">
+          <div data-role="header" data-theme="d">
+            <h1>The challenge</h1>
+          </div>
+          <div data-role="content" data-theme="c">
+            Can you identify a candidate by their quotes? Not so easy!
+            <br>
+            <br>
+            <div style="text-align: center;"><a id="playbutton" data-role="button" data-inline="true" data-theme="b">Play Now!</a></div>
+            <br>
+            <br>
+            Please please please use the suggestions link!
+          </div>
+        </div>
 
 
-	<div id="pageinfo" style="display:none">
-  
+        <div id="pageinfo" style="display:none">
+
           <div id="intro" data-role="header" class="block66 ui-header ui-bar-a" role="banner">
             <h3 class="ui-title" role="heading" aria-level="1">Election 2012</h3>
           </div>
 
           <div data-role="content" class="ui-content" role="main">
 
-          <div id="question" class="block66">
-            <b>Who said this on <span id="date"></span>?</b>
-            <br>
-            <i><span id="quote"></span></i>
-	    <br>
-	  </div>
+            <div id="question" class="block66">
+              <b>Who said this on <span id="date"></span>?</b>
+              <br>
+              <i><span id="quote"></span></i>
+              <br>
+            </div>
 
-	  <div id="response" class="block66">
-	    <span id="answeroptions"></span>
-	  </div>
+            <div id="response" class="block66">
+              <span id="answeroptions"></span>
+            </div>
 
-	  <div id="results" class="block66">
-	    <span id="answer"></span>
-	    <span id="sourcelink"></span>
-	    <span id="nextq"></span>
-	  </div>
-      
-      <div id="score" class="block66">
-          <b>Score: 0.00%</b>
-          <br>
-        </div>
+            <div id="results" class="block66">
+              <span id="answer"></span>
+              <span id="sourcelink"></span>
+              <span id="nextq"></span>
+            </div>
 
-        </div><!-- /content -->
-	
-                <div id="footer" data-role="footer" data-position="fixed" 
-                                 class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
-	    <div class="ui-btn-left" style="top:25px;color:grey">v02</div>
+            <div id="score" class="block66">
+              <b>Score: 0.00%</b>
+              <br>
+            </div>
+
+          </div><!-- /content -->
+
+          <div id="footer" data-role="footer" data-position="fixed" 
+            class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
+            <div class="ui-btn-left" style="top:25px;color:grey">v02</div>
             <h4 style="text-align:right" class="ui-title" role="heading" aria-level="1">
               <span id="sugbutton" onclick="gotofeedback();" style="cursor:pointer; display: inline-block; height: 30px; margin-top:15px">Suggestions?</span>
             </h4>
-	  </div>
-
-	</div>
-
-	</body>
-
-</html>
+          </div>
+        </div>
+      </body>
+    </html>
