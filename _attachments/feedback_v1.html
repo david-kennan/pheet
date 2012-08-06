@@ -19,8 +19,17 @@
     <script src="vendor/couchapp/md5.js"></script>
     <script src="vendor/couchapp/jquery.mobile-1.1.0.js"></script>
     <script type="text/javascript" src="vendor/couchapp/jQuery.twFile.js"></script>
+      
+      <script type="text/javascript" src="vendor/couchapp/tracklib.js"></script>
 
     <script>
+        var savingFeedback = false;
+        
+        $(window).bind("beforeunload", function () {
+                                if(!savingFeedback) {
+                                    trackEvent(10); // Suggestions Dialog Closed
+                                }
+                       });
       $(document).ready(function(){
         $('#cancelbutton').click(function() {
         window.opener = null;
@@ -28,12 +37,17 @@
       });
       
       $('#sendbutton').click(function() {
+          savingFeedback = true;
           restFrag = '_update/createNewSuggestion';
           var doc = new Object();
           doc.page = "quiz";
           doc.block = "NoBlock";
           doc.version = 'v01'; 
           doc.suggestion = $("#textarea1").val();
+          if (doc.suggestion != "") {
+            trackEvent(9); // Suggestions Text Entered
+          }
+          trackEvent(7); // Submit Clicked
           doc.userAgent = $.browser.name + "_" + $.browser.version + "_" + $.os.name;
           var postData = JSON.stringify(doc);
           $.post(restFrag, postData, 

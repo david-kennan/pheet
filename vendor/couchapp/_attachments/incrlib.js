@@ -44,6 +44,18 @@
 		if ( u == "dialog" ) {
 			 // Call method that displays the correct data in the dialog on the fly 
 			 hideNodeList();
+             if (e.target.getAttribute("id") == "dialog_a") {
+                if ($("#textarea").val() != "") {
+                     trackEvent(9); // Suggestions Text Entered
+                }
+                if (savingFeedback) {
+                     trackEvent(7); // Submit Clicked
+                     savingFeedback = false;
+                }
+                else {
+                     trackEvent(10); // Suggestions Dialog Closed
+                }
+             }
 		}
 	});
 
@@ -104,11 +116,15 @@
 			$('#sugbutton').css('z-index',z);
 			showBlocks();
 			togglemode = true;
+ 
+            trackEvent(8); // Suggestions Clicked
 		} else {
 //			$('#gear-status')[0].innerHTML = "\<img src=\"style\/img\/gear-unselected.png\" onclick=\"kToggle.toggle()\" alt=\"" + rscK.l_001_l + "\" width=\"32\" height=\"32\" \>";
 			togglemode = false;
 			blocksShowing = false;
 			$('#showBlocksLayer').remove();
+ 
+            trackEvent(6); // Back to Game Clicked
 		}
 	}
 
@@ -139,11 +155,12 @@
 		for (var i=0;i<getObjectLength(blocks);i++){
 			blocks[i].id;
 			var blockName = blocks[i].id + "HighlightBlock";
-			var blockSelector = "#" + blockName;
-			var tmptext = "\<div id=\"" + blockName + "\"\>\<\/div\>";
+			var blockSelector = "#" + blockName + "overlay";
+			var tmptext = "\<div id=\"" + blockName + "overlay\"\>\<\/div\>";
 			$('#showBlocksLayer').append(tmptext);
 			$(blockSelector).css({'position': 'absolute', 'z-index': z, 'top': blocks[i].top, 'left': blocks[i].left, 'height': blocks[i].height + 'px', 'width': blocks[i].width + 'px', 'border': '1px dashed #f11'});
-			$(blockSelector).on('click', showNodeList);
+ $(blockSelector).one('click', showNodeList);
+ //$(blockSelector).live('click', showNodeList);
 		}
 
 			// quick tutorial on the page blocks
@@ -190,6 +207,7 @@
 
 		if( inShowNodeList) return; else inShowNodeList = true;
 		if( togglemode == true ) {
+            trackEvent(5); // Red box clicked
 			var blockName = $(this).prop('id') + "SelectedBlock";
 			activeBlock = "#" + blockName;
 			var tmptext = "\<div id=\"" + blockName + "\"\>\<a href=\"feedback_v2.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>";
@@ -561,7 +579,10 @@ function gotofeedback() {
   $('#sugbutton').html('Back to game');
 }
 
+var savingFeedback = false; // used to differentiate between user clicking Submit and user closing the dialog (see pagehide handler)
+
 function savefeedback() {
+    savingFeedback = true;
   var restFrag = '_update/createNewSuggestion';
   var doc = new Object();
   doc.page = "quiz";

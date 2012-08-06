@@ -16,11 +16,13 @@
     <script src="vendor/couchapp/rsc.js"></script>
     <script src="vendor/couchapp/json2.js"></script>
     <script src="vendor/couchapp/incrlib.js"></script>
+    <script src="vendor/couchapp/tracklib.js"></script>
 
     <script>	
 		// read data from a local file. later, modify to read from server
 		var j = {}; // store questions from JSON data
 		var q = 0; // counter for questions in gameplay
+        var correct = 0; // counter for questions correct
 		var page_bg = $('#page').css('background');
 
 		$(document).ready(function(){
@@ -34,8 +36,11 @@
 			}
 			// activate that link as a dialog
 			$('#dialog_welcomeLayer').children([href="#dialog_welcome"]).click();
+            $(".ui-dialog-titlebar-close", $('#dialog_welcomeLayer').parent()).hide();
 
 	    $('#playbutton').click(function(event) {
+            $('#dialog_welcomeLayer').UiBtnIconNoText = "display:none";
+            trackEvent(1); // Play Button Clicked
 		    $db = $.couch.db("quote");
 		    $db.view("pheet/question",
 		      { success: function( data ) {
@@ -65,6 +70,8 @@
 		        }
 		    });
 	    });
+                          setKPI('Version', 'V02');
+                  registerUser(2);  // increment visitor count 
 		});
 
 		// this is a stub function that should really get data (in batches) from the network but does not yet have that ability
@@ -79,21 +86,33 @@
 			document.getElementById("sourcelink").textContent = "";
 			document.getElementById("nextq").textContent = "";
 			}
-
+        
+        
+        var responseScored = false; // Required so that multiple answer clicks do not get added into the user's score
 		function evalResponse(r) {
 			// should test for proper input here, improve that
 			var responsearray = {};
 			responsearray[0] = j[q]["person1"];
 			responsearray[1] = j[q]["person2"];
+            trackEvent(4); // Answer Clicked
 			if( j[q]["answer"] == responsearray[r-1]){
 				document.getElementById("answer").textContent = "Correct!";
+                if (!responseScored) {
+                    correct++;
+                }
 			} else {
 				document.getElementById("answer").textContent = "Wrong!";
 			}
+            responseScored = true;
+            var pctScore = correct / (q+1) * 100;
+            document.getElementById("score").textContent = "Score: " + (Math.round(100 * pctScore)/100).toFixed(2) + "%";
+            setKPI('Score', pctScore);
+            setKPI('Questions Answered', q+1);
+            
 			//show source link
-			document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\">Source</a>";
+            document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"trackEvent(3)\" target=\"_blank\">Source</a>";
 			// add a button to ask next question
-			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"displayQuestion()\" />";
+			document.getElementById("nextq").innerHTML = "<input data-theme=\"b\" data-inline=\"true\" type=\"button\" name=\"nextquestion\" value=\"Next Question\" onclick=\"responseScored = false; trackEvent(2); displayQuestion()\" />";
 			$('input[type="button"]').button();		// Added by xiaozc, to make button as JQM style
 			}
 			
@@ -143,6 +162,7 @@
 	</div><!-- /page -->  	 
 
 	<div id="dialog_welcome" data-rel="dialog" data-role="dialog">
+        <style>.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none;} </style>
 		<div data-role="header" data-theme="d">
 			<h1>The challenge</h1>
 			</div>
@@ -182,6 +202,11 @@
 	    <span id="sourcelink"></span>
 	    <span id="nextq"></span>
 	  </div>
+      
+      <div id="score" class="block66">
+          <b>Score: 0.00%</b>
+          <br>
+        </div>
 
         </div><!-- /content -->
 	
