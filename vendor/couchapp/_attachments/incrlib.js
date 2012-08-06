@@ -45,9 +45,6 @@
 			 // Call method that displays the correct data in the dialog on the fly 
 			 hideNodeList();
              if (e.target.getAttribute("id") == "dialog_a") {
-                if ($("#textarea").val() != "") {
-                     trackEvent(9); // Suggestions Text Entered
-                }
                 if (savingFeedback) {
                      trackEvent(7); // Submit Clicked
                      savingFeedback = false;
@@ -245,6 +242,7 @@
 			// display the page-level annotation dialog, see logic in pageload handler above
 			$(blockSelector).children([href="feedback_v2.html"]).click();
 			inShowNodeList = false;
+            $(e.srcElement).one('click', showNodeList);
 			// need to call hideNodeList() when that dialog is closed!
 			return;
 
@@ -589,6 +587,7 @@ function savefeedback() {
   doc.block = window['kToggle']['activeBlock'];
   doc.version = 'v02';
   doc.suggestion = $("#textarea").val();
+  doc.trackingID = getUniqueVisitID();
   var postData = JSON.stringify(doc);
   $.post(restFrag, postData, 
       function(data) {

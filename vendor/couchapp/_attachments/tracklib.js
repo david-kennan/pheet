@@ -2,8 +2,13 @@
 
 var _paq = _paq || [];
 _paq.push(['setSiteId', 1]);
-_paq.push(['setTrackerUrl', 'http://' + document.location.hostname + '/piwik/piwik.php']);
+var piwikURL = 'http://' + document.location.hostname + '/piwik/piwik.php';
+_paq.push(['setTrackerUrl', piwikURL]);
 _paq.push(['enableLinkTracking']);
+var visitorID = "0";
+_paq.push([function ()  {
+           visitorID = this.getVisitorId();
+           }]);
 var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='vendor/couchapp/piwik.js';
 s.parentNode.insertBefore(g,s); 
 
@@ -24,6 +29,10 @@ function setKPI(key, value) {
         }
     }
     _paq.push(['setCustomVariable', index, key, value, 'visit']);
-    _paq.push(['trackPageView']); // needed to register setting custom variable
     return 'Success: KPI value set';
+}
+
+function getUniqueVisitID() {
+    while (visitorID == "0");
+    return visitorID;
 }

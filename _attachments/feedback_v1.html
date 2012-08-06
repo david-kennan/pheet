@@ -14,10 +14,13 @@
         var savingFeedback = false;
         
         $(window).bind("beforeunload", function () {
-                                if(!savingFeedback) {
-                                    trackEvent(10); // Suggestions Dialog Closed
-                                }
-                       });
+            if($("#textarea1").val() != "") {
+                trackEvent(9); // Suggestions Text Entered
+            }
+            if(!savingFeedback) {
+                trackEvent(10); // Suggestions Dialog Closed
+            }
+        });
       $(document).ready(function(){
         $('#cancelbutton').click(function() {
         window.opener = null;
@@ -32,9 +35,7 @@
           doc.block = "NoBlock";
           doc.version = 'v01'; 
           doc.suggestion = $("#textarea1").val();
-          if (doc.suggestion != "") {
-            trackEvent(9); // Suggestions Text Entered
-          }
+          doc.trackingID = getUniqueVisitID();
           trackEvent(7); // Submit Clicked
           var postData = JSON.stringify(doc);
           $.post(restFrag, postData, 

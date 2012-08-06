@@ -11,6 +11,7 @@ function(doc, req) {
     newDoc.lastModified = docCreation;
     newDoc.FDLclass = 'SuggestionViaUI';
     newDoc.labels = [];
+    newDoc.trackingID = receivedObj.trackingID;
     newDoc.featureID = {};
     var success = newDoc._id && newDoc.page && newDoc.block && newDoc.suggestion && newDoc.dateCreated && newDoc.lastModified && (newDoc.FDLclass == 'SuggestionViaUI') && newDoc.appVersion && newDoc.labels && newDoc.featureID;
     if (success) {

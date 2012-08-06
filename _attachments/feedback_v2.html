@@ -8,6 +8,9 @@
 <body> 
 <div id="dialog_a" data-role="dialog">
     <script>
+        $("#dialog_a").one("change", function() {
+            trackEvent(9); // Suggestions Text Entered
+        });
     </script>
 	<div data-role="header" data-theme="d">
 		<h1>Suggestions</h1>
