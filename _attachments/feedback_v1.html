@@ -4,16 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" type="text/css" href="style/jquery.mobile-1.1.0.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css"/>
 
-    <script src="vendor/couchapp/jquery-1.7.1.min.js"></script>
-    <script src="vendor/couchapp/jquery.mobile-1.1.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
     <script src="vendor/couchapp/tracklib.js"></script>
 
     <script>
       var savingFeedback = false;
 
       $(window).bind("beforeunload", function () {
+        if($("#textarea1").val() != "") {
+          trackEvent(9); // Suggestions Text Entered
+        }
         if(!savingFeedback) {
           trackEvent(10); // Suggestions Dialog Closed
         }
@@ -32,9 +35,7 @@
           doc.block = "NoBlock";
           doc.version = 'v01'; 
           doc.suggestion = $("#textarea1").val();
-          if (doc.suggestion != "") {
-            trackEvent(9); // Suggestions Text Entered
-          }
+          doc.trackingID = getUniqueVisitID();
           trackEvent(7); // Submit Clicked
           var postData = JSON.stringify(doc);
           $.post(restFrag, postData, 
