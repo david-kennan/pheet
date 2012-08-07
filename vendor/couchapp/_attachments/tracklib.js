@@ -30,10 +30,10 @@ function setKPI(key, value) {
         }
     }
     _paq.push(['setCustomVariable', index, key, value, 'visit']);
+    _paq.push(['trackPageView']); // needed to register setting custom variable
     return 'Success: KPI value set';
 }
 
 function getUniqueVisitID() {
-    while (visitorID == "0");
     return visitorID;
 }

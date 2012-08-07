@@ -1,32 +1,32 @@
 <!DOCTYPE html> 
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Suggestions</title> 
-</head> 
-<body> 
-<div id="dialog_a" data-role="dialog">
-    <script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Suggestions</title> 
+  </head> 
+  <body> 
+    <div id="dialog_a" data-role="dialog">
+      <script>
         $("#dialog_a").one("change", function() {
-            trackEvent(9); // Suggestions Text Entered
+          trackEvent(9); // Suggestions Text Entered
         });
-    </script>
-	<div data-role="header" data-theme="d">
-		<h1>Suggestions</h1>
-		</div>
-	<div data-role="content" data-theme="c">
-		<h2>Your suggestion</h2>
-			<div id="nodeDetailNewCommentDiv">
-				<div data-role="fieldcontain">
-					<label for="textarea"></label>
-					<textarea name="textarea" id="textarea" placeholder="Type your suggestion here"></textarea>
-				</div>
-				<div style="text-align: center;"><a id="sendbutton" data-role="button" data-rel="back" data-theme="b" data-inline="true" onclick="savefeedback();">Submit</a></div>
-			</div>
-                        <!--<span id="nodeDisplay"></span>-->
-		</div>
-	</div>
+      </script>
+      <div data-role="header" data-theme="d">
+        <h1>Suggestions</h1>
+      </div>
+      <div data-role="content" data-theme="c">
+        <h2>Your suggestion</h2>
+        <div id="nodeDetailNewCommentDiv">
+          <div data-role="fieldcontain">
+            <label for="textarea"></label>
+            <textarea name="textarea" id="textarea" placeholder="Type your suggestion here"></textarea>
+          </div>
+          <div style="text-align: center;"><a id="sendbutton" data-role="button" data-rel="back" data-theme="b" data-inline="true" onclick="savefeedback();">Submit</a></div>
+        </div>
+        <!--<span id="nodeDisplay"></span>-->
+      </div>
+    </div>
 
   </body>
 </html>

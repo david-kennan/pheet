@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css"/>
-    
+
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
     <script src="vendor/couchapp/tracklib.js"></script>
 
     <script>
-        var savingFeedback = false;
-        
-        $(window).bind("beforeunload", function () {
-            if($("#textarea1").val() != "") {
-                trackEvent(9); // Suggestions Text Entered
-            }
-            if(!savingFeedback) {
-                trackEvent(10); // Suggestions Dialog Closed
-            }
-        });
+      var savingFeedback = false;
+
+      $(window).bind("beforeunload", function () {
+        if($("#textarea1").val() != "") {
+          trackEvent(9); // Suggestions Text Entered
+        }
+        if(!savingFeedback) {
+          trackEvent(10); // Suggestions Dialog Closed
+        }
+      });
       $(document).ready(function(){
         $('#cancelbutton').click(function() {
-        window.opener = null;
-        window.close();
-      });
-      
-      $('#sendbutton').click(function() {
+          window.opener = null;
+          window.close();
+        });
+
+        $('#sendbutton').click(function() {
           savingFeedback = true;
           restFrag = '_update/createNewSuggestion';
           var doc = new Object();
@@ -43,32 +43,32 @@
             window.opener = null;
             window.close();
           });
+        });
       });
-     });
-   </script>
+    </script>
 
     <title>Suggestions</title>
 
-   </head>
- <body>
-        <!-- Home -->
-        <div data-role="page" id="page1">
-            <div data-role="content" style="padding: 15px">
-                <div>
-                  Your suggestions are very important to us, and will help us to improve our products. Please let us know about any problems, 
-                  offer suggestions for improvement, or just write to say hello.
-                </div>
-                <div data-role="fieldcontain">
-                    <fieldset data-role="controlgroup">
-                        <label for="textarea1"></label>
-                        <textarea id="textarea1" placeholder="Type your suggestion here"></textarea>
-                    </fieldset>
-                </div>
-                <div style="text-align: center;">
-                  <a id="cancelbutton" data-role="button" data-theme="b" data-inline="true" data-transition="fade" href="">Cancel</a>
-                  <a id="sendbutton" data-role="button" data-theme="b" data-inline="true" data-transition="fade" href="">Send</a>
-  	        </div>
-            </div>
+  </head>
+  <body>
+    <!-- Home -->
+    <div data-role="page" id="page1">
+      <div data-role="content" style="padding: 15px">
+        <div>
+          Your suggestions are very important to us, and will help us to improve our products. Please let us know about any problems, 
+          offer suggestions for improvement, or just write to say hello.
         </div>
+        <div data-role="fieldcontain">
+          <fieldset data-role="controlgroup">
+            <label for="textarea1"></label>
+            <textarea id="textarea1" placeholder="Type your suggestion here"></textarea>
+          </fieldset>
+        </div>
+        <div style="text-align: center;">
+          <a id="cancelbutton" data-role="button" data-theme="b" data-inline="true" data-transition="fade" href="">Cancel</a>
+          <a id="sendbutton" data-role="button" data-theme="b" data-inline="true" data-transition="fade" href="">Send</a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
