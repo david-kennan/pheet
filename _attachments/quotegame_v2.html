@@ -93,20 +93,32 @@
 			var responsearray = {};
 			responsearray[0] = j[q]["person1"];
 			responsearray[1] = j[q]["person2"];
-            trackEvent(4); // Answer Clicked
+            //trackEvent(4); // Answer Clicked
 			if( j[q]["answer"] == responsearray[r-1]){
 				document.getElementById("answer").textContent = "Correct!";
-                if (!responseScored) {
+                if (responseScored) {
+                    trackEvent(12); // Correct Answer Clicked After Answering
+                }
+                else {
+                    trackEvent(4); // Answer Clicked
                     correct++;
                 }
 			} else {
 				document.getElementById("answer").textContent = "Wrong!";
+                if (responseScored) {
+                    trackEvent(11); // Wrong Answer Clicked After Answering
+                }
+                else {
+                    trackEvent(4); // Answer Clicked
+                }
 			}
-            responseScored = true;
-            var pctScore = correct / (q+1) * 100;
-            document.getElementById("score").textContent = "Score: " + (Math.round(100 * pctScore)/100).toFixed(2) + "%";
-            setKPI('Score', pctScore);
-            setKPI('Questions Answered', q+1);
+            if (!responseScored) {
+                responseScored = true;
+                var pctScore = correct / (q+1) * 100;
+                document.getElementById("score").textContent = "Score: " + (Math.round(100 * pctScore)/100).toFixed(2) + "%";
+                setKPI('Score', pctScore);
+                setKPI('Questions Answered', q+1);
+            }
             
 			//show source link
             document.getElementById("sourcelink").innerHTML = "<a href=\"" + j[q]["sourcelink"] + "\" onclick=\"trackEvent(3)\" target=\"_blank\">Source</a>";

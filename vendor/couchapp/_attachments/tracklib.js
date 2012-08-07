@@ -9,7 +9,8 @@ var visitorID = "0";
 _paq.push([function ()  {
            visitorID = this.getVisitorId();
            }]);
-var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='vendor/couchapp/piwik.js';
+_paq.push(['trackPageView']);
+var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='vendor/couchapp/piwik.min.js';
 s.parentNode.insertBefore(g,s); 
 
 var customVars = []; // an array for associating the keys that the user passes with the index passed to the setCustomVariable function
