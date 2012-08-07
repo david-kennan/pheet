@@ -9,6 +9,7 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
     <script src="vendor/couchapp/tracklib.js"></script>
+    <script src="vendor/couchapp/jquery.cookie.min.js"></script>
 
     <script>
       var savingFeedback = false;
@@ -36,6 +37,9 @@
           doc.version = 'v01'; 
           doc.suggestion = $("#textarea1").val();
           doc.trackingID = getUniqueVisitID();
+          if ($.cookie('test user')) {
+            doc.testdata = true;
+          }
           trackEvent(7); // Submit Clicked
           var postData = JSON.stringify(doc);
           $.post(restFrag, postData, 
