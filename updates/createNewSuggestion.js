@@ -13,7 +13,8 @@ function(doc, req) {
     newDoc.labels = [];
     newDoc.trackingID = receivedObj.trackingID;
     newDoc.featureID = {};
-    var success = newDoc._id && newDoc.page && newDoc.block && newDoc.suggestion && newDoc.dateCreated && newDoc.lastModified && (newDoc.FDLclass == 'SuggestionViaUI') && newDoc.appVersion && newDoc.labels && newDoc.featureID;
+    newDoc.testdata = receivedObj.testdata;
+    var success = newDoc._id && newDoc.page && newDoc.block && newDoc.suggestion && newDoc.dateCreated && newDoc.lastModified && (newDoc.FDLclass == 'SuggestionViaUI') && newDoc.appVersion && newDoc.labels && newDoc.featureID && newDoc.trackingID && newDoc.testdata;
     if (success) {
         return [newDoc, 'success: suggestion document created'];
     }
