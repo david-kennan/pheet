@@ -30,6 +30,10 @@
               }
               // activate that link as a dialog
               $('#dialog_welcomeLayer').children([href="#dialog_welcome"]).click();
+                          
+              $(window).unload(function() {
+                trackEvent(13); // Goal: Window closed
+              });
 
               $('#playbutton').click(function(event) {
                 trackEvent(1);

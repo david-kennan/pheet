@@ -31,7 +31,9 @@
               // activate that link as a dialog
               $('#dialog_welcomeLayer').children([href="#dialog_welcome"]).click();
               $(".ui-dialog-titlebar-close", $('#dialog_welcomeLayer').parent()).hide();
-
+              $(window).unload(function() {
+                trackEvent(13); // Goal: window closed
+              });
 
               $('#playbutton').click(function(event) {
                 $('#dialog_welcomeLayer').UiBtnIconNoText = "display:none";
