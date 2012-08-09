@@ -13,14 +13,6 @@ _paq.push(['trackPageView']);
 var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='vendor/couchapp/piwik.min.js';
 s.parentNode.insertBefore(g,s);
 
-$(window).unload(function() {
-                 var oldDate = new Date();
-                 var newDate;
-                 do {
-                 newDate = new Date();
-                 } while (newDate-oldDate < 3000);
-                 });
-
 var customVars = []; // an array for associating the keys that the user passes with the index passed to the setCustomVariable function
 
 function trackEvent(index) {
