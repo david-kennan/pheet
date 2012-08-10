@@ -6,6 +6,8 @@ var tracklib="tracklib.js"
 var incrlib="incrlib.js"
 var jquerycookie="jquery.cookie.min.js"
 var intllib="rsc.js"
+var html2canvas="html2canvas.min.js"
+var html2cjquery="jquery.plugin.html2canvas.js"
 var base="vendor/couchapp/"
 
 var ready = function() {
@@ -37,6 +39,8 @@ function load() {
           base+intllib,
           base+incrlib,
           base+tracklib,
+          base+html2canvas,
+          base+html2cjquery,
           ready
           );
       break;

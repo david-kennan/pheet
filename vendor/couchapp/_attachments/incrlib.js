@@ -598,3 +598,11 @@ function savefeedback() {
       }, 
       "json");
 }
+
+function capturePage() {
+    html2canvas([document.body], {
+                onrendered: function(canvas) {
+                document.body.appendChild(canvas);
+                }
+                });
+}
