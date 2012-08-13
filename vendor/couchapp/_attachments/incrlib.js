@@ -197,7 +197,9 @@
 		// posx and posy contain the mouse position relative to the document
 		if (posx > $('#sugbutton').offset().left && posy > $('#sugbutton').offset().top) {		// by xiaozc. clicked in the link button area
 	  	kToggle.toggle();
-  		$('#sugbutton').html('Suggestions?');
+  		//$('#sugbutton').html('Suggestions?');
+        $('#wholemenu').css('display', 'inline');
+        $('#gamereturn').css('display', 'none');
   		return ;
 		}
 
@@ -574,7 +576,10 @@
 
 function gotofeedback() {
   kToggle.toggle();
-  $('#sugbutton').html('Back to game');
+  //$('#sugbutton').html('Back to game');
+  //document.getElementById("sugbutton").textContent = "Back to game";
+    $('#wholemenu').css('display', 'none');
+    $('#gamereturn').css('display', 'inline');
 }
 
 var savingFeedback = false; // used to differentiate between user clicking Submit and user closing the dialog (see pagehide handler)

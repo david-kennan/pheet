@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+ß<!DOCTYPE html>
 <html>  
   <head>
     <meta charset="utf-8">
@@ -12,6 +12,169 @@
     <script type="text/javascript">var loader_app_version=2;</script>
     <script src="vendor/couchapp/head.min.js"></script>
     <script src="vendor/couchapp/loader.js"></script>
+        <style type="text/css">
+            /* Main */
+            #sugmenu{
+                width: 150px;
+                height: 35px;
+                margin-left: auto;
+                padding: 0px 0 0 0;
+                list-style: none;
+                /*background: #111;
+                background: -moz-linear-gradient(#444, #111);
+                background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+                background: -webkit-linear-gradient(#444, #111);
+                background: -o-linear-gradient(#444, #111);
+                background: -ms-linear-gradient(#444, #111);
+                background: linear-gradient(#444, #111);
+                -moz-border-radius: 50px;
+                border-radius: 50px;*/
+                /*-moz-box-shadow: 0 2px 1px #9c9c9c;
+                -webkit-box-shadow: 0 2px 1px #9c9c9c;
+                box-shadow: 0 2px 1px #9c9c9c;*/
+            }
+            
+            #sugmenu li{
+                float: left;
+                padding: 5px 0 10px 0;
+                top:-5px; /* Added this line to offset padding above*/
+                position: relative;
+            }
+            
+            #sugmenu a{
+                float: left;
+                height: 25px;
+                padding: 0 25px;
+                color: #FFFFFF;
+                /*text-transform: uppercase;*/
+                font: bold 18px/25px Arial, Helvetica;
+                text-decoration: none;
+                /*text-shadow: 0 1px 0 #000;*/
+            }
+            
+            #sugmenu li:hover > a{
+                color: #fafafa;
+            }
+            
+            *html #sugmenu li a:hover{ /* IE6 */
+                color: #fafafa;
+            }
+            
+            #sugmenu li:hover > ul{
+                /*display: block;*/
+            }
+            
+            /* Sub-menu */
+            
+            #sugmenu ul{
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: none;
+                position: absolute;
+                /*top: 35px;*/
+                bottom: 55px;
+                right: 10px;
+                z-index: 99999;
+                background: #444;
+                background: -moz-linear-gradient(#444, #111);
+                background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+                background: -webkit-linear-gradient(#444, #111);
+                background: -o-linear-gradient(#444, #111);
+                background: -ms-linear-gradient(#444, #111);
+                background: linear-gradient(#444, #111);
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+            }
+            
+            #sugmenu ul li{
+                float: none;
+                margin: 0;
+                padding: 0;
+                display: block;
+                -moz-box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+                -webkit-box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+                box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+                top:auto; /* Added to undo change to main menu. */
+            }
+            
+            #sugmenu ul li:last-child{
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+            
+            #sugmenu ul a{
+                padding: 10px;
+                height: auto;
+                line-height: 1;
+                display: block;
+                white-space: nowrap;
+                float: none;
+                text-transform: none;
+            }
+            
+            *html #sugmenu ul a{ /* IE6 */
+                height: 10px;
+                width: 150px;
+            }
+            
+            *:first-child+html #sugmenu ul a{ /* IE7 */
+                height: 10px;
+                width: 150px;
+            }
+            
+            #sugmenu ul a:hover{
+                background: #0186ba;
+                background: -moz-linear-gradient(#04acec,  #0186ba);
+                background: -webkit-gradient(linear, left top, left bottom, from(#04acec), to(#0186ba));
+                background: -webkit-linear-gradient(#04acec,  #0186ba);
+                background: -o-linear-gradient(#04acec,  #0186ba);
+                background: -ms-linear-gradient(#04acec,  #0186ba);
+                background: linear-gradient(#04acec,  #0186ba);
+            }
+            
+            #sugmenu ul li:first-child a{
+                -moz-border-radius: 5px 5px 0 0;
+                -webkit-border-radius: 5px 5px 0 0;
+                border-radius: 5px 5px 0 0;
+            }
+            
+            #sugmenu ul li:last-child a{
+                -moz-border-radius: 0 0 5px 5px;
+                -webkit-border-radius: 0 0 5px 5px;
+                border-radius: 0 0 5px 5px;
+            }
+            
+            /*#sugmenu ul li:last-child a:after{
+                content: '';
+                position: absolute;
+                left: 30px;
+                top: 32px;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 8px solid #000;
+            }*/
+            
+            #sugmenu ul li:last-child a:hover:after{
+                border-top-color: #04acec;
+            }
+            
+            /* Clear floated elements */
+            #sugmenu:after{
+                visibility: hidden;
+                display: block;
+                font-size: 0;
+                content: " ";
+                clear: both;
+                height: 0;
+            }
+            
+            * html #sugmenu             { zoom: 1; } /* IE6 */
+            *:first-child+html #sugmenu { zoom: 1; } /* IE7 */
+            </style>
 
     <script>	
       var j = {}; // store questions from JSON data
@@ -20,6 +183,7 @@
 
       head.ready(function() { // execute once loader complete
         $(document).ready(function(){
+                          
           page_bg = $('#page').css('background');
           $('#page').css('background', 'black');
 
@@ -34,7 +198,6 @@
               $(window).unload(function() {
                 trackEvent(13); // Goal: window closed
               });
-
               $('#playbutton').click(function(event) {
                 $('#dialog_welcomeLayer').UiBtnIconNoText = "display:none";
                 trackEvent(1); // Play Button Clicked
@@ -46,7 +209,7 @@
                     $('#page').css('background', page_bg);
                     $('#page').append($('#pageinfo').html()).trigger('create');
                     $('#pageinfo').empty();		// This line is needed to make red block shown correctly. by xiaozc
-                    $('#sugbutton').removeClass('ui-link');
+                    //$('#sugbutton').removeClass('ui-link');
 
                     // menu stuff
                     $('.myMenu > li').bind('mouseover', openSubMenu);
@@ -64,12 +227,30 @@
                     displayQuestion();
 
                     $.mobile.changePage($('#page'), 'pop', false, true);
+                    var menuButton = $("#sugmenu");
+                    menuButton.on('touchend', displaySugMenu);
+                    menuButton.on('mouseover', displaySugMenu);
+                    menuButton.on('mouseout', hideSugMenu);
                   }
                 });
               });
               setKPI('Version', 'V02');
             });
-          }); // loader ready end	
+          }); // loader ready end
+        
+        function displaySugMenu() {
+            $("#submenu").css('display', 'block');
+            $("#sugmenu").off('touchend', displaySugMenu);
+            setTimeout(function() {
+                       $(document).on('touchend', hideSugMenu);
+                       }, 500);
+        }
+        function hideSugMenu() {
+            $("#submenu").css('display', 'none');
+            $(document).off('touchend', hideSugMenu);
+            $("#sugmenu").on('touchend', displaySugMenu);
+        }
+        
           // this is a stub function that should really get data (in batches) from the network but does not yet have that ability
           function displayQuestion() {
             q += 1;
@@ -157,15 +338,6 @@
           }
           //end of Net code for deepCopy
         
-          /*function expandSuggestions() {
-              var footerRight = $("#rightarea");
-              footerRight.append("<span>Draw on Page</span>");
-              var sugbutton = document.getElementById("sugbutton");
-              sugbutton.textContent = "Select Block";
-          }
-          function collapseSuggestions() {
-              document.getElementById("sugbutton").textContent = "Suggestions";
-          }*/
         </script>
         <title>Election 2012</title>
       </head>
@@ -223,11 +395,23 @@
           </div><!-- /content -->
 
           <div id="footer" data-role="footer" data-position="fixed" 
-            class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo">
-            <div class="ui-btn-left" style="top:25px;color:grey">v02</div>
-            <h4 id="rightarea" style="text-align:right" class="ui-title" role="heading" aria-level="1">
-              <span id="sugbutton" onclick="gotofeedback()" style="cursor:pointer; display: inline-block; height: 30px; margin-top:15px">Suggestions?</span>
-            </h4>
+            class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo" style="height:45px">
+            <div class="ui-btn-left" style="top:15px; color:grey; height:45px">v02</div>
+              <ul id="wholemenu">
+                  <li id="sugmenu">
+                      <a href="#">Suggestions?</a>
+                      <ul id="submenu">
+                          <li><a href="#" onclick="gotofeedback()">Type your Suggestion</a></li>
+                          <li><a href="#">Draw your Suggestion</a></li>
+                      </ul>
+                  </li>
+              </ul>
+              <div id="gamereturn" style="display:none">
+              <h4 id="rightarea" style="text-align:right" class="ui-title" role="heading" aria-level="1">
+                  <span id="sugbutton" style="cursor:pointer; display: inline; height: 30px; margin-top:15px" >Back to game</span>
+                  <!--onclick="gotofeedback()" -->
+              </h4>
+            </div>
           </div>
         </div>
       </body>
