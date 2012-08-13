@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            /* Main */
+            #menu{
+                width: auto;
+                height: 35px;
+                margin: 0;
+                padding: 10px 0 0 0;
+                list-style: none;
+                background: #111;
+                background: -moz-linear-gradient(#444, #111);
+                background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+                background: -webkit-linear-gradient(#444, #111);
+                background: -o-linear-gradient(#444, #111);
+                background: -ms-linear-gradient(#444, #111);
+                background: linear-gradient(#444, #111);
+                -moz-border-radius: 50px;
+                border-radius: 50px;
+                -moz-box-shadow: 0 2px 1px #9c9c9c;
+                -webkit-box-shadow: 0 2px 1px #9c9c9c;
+                box-shadow: 0 2px 1px #9c9c9c;
+            }
+            
+            #menu li{
+                float: left;
+                padding: 25px 0 10px 0;
+                top:-25px; /* Added this line to offset padding above*/
+                position: relative;
+            }
+            
+            #menu a{
+                float: left;
+                height: 25px;
+                padding: 0 25px;
+                color: #999;
+                text-transform: uppercase;
+                font: bold 12px/25px Arial, Helvetica;
+                text-decoration: none;
+                text-shadow: 0 1px 0 #000;
+            }
+            
+            #menu li:hover > a{
+                color: #fafafa;
+            }
+            
+            *html #menu li a:hover{ /* IE6 */
+                color: #fafafa;
+            }
+            
+            #menu li:hover > ul{
+                /*display: block;*/
+            }
+            
+            /* Sub-menu */
+            
+            #menu ul{
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: none; /* none */
+                position: absolute;
+                /*top: 35px;*/
+                bottom: 45px;
+                left: 0;
+                z-index: 99999;
+                background: #444;
+                background: -moz-linear-gradient(#444, #111);
+                background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+                background: -webkit-linear-gradient(#444, #111);
+                background: -o-linear-gradient(#444, #111);
+                background: -ms-linear-gradient(#444, #111);
+                background: linear-gradient(#444, #111);
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+            }
+            
+            #menu ul li{
+                float: none;
+                margin: 0;
+                padding: 0;
+                display: block;
+                -moz-box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+                -webkit-box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+                box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+                top:auto; /* Added to undo change to main menu. */
+            }
+            
+            #menu ul li:last-child{
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+            
+            #menu ul a{
+                padding: 10px;
+                height: auto;
+                line-height: 1;
+                display: block;
+                white-space: nowrap;
+                float: none;
+                text-transform: none;
+            }
+            
+            *html #menu ul a{ /* IE6 */
+                height: 10px;
+                width: 150px;
+            }
+            
+            *:first-child+html #menu ul a{ /* IE7 */
+                height: 10px;
+                width: 150px;
+            }
+            
+            #menu ul a:hover{
+                background: #0186ba;
+                background: -moz-linear-gradient(#04acec,  #0186ba);
+                background: -webkit-gradient(linear, left top, left bottom, from(#04acec), to(#0186ba));
+                background: -webkit-linear-gradient(#04acec,  #0186ba);
+                background: -o-linear-gradient(#04acec,  #0186ba);
+                background: -ms-linear-gradient(#04acec,  #0186ba);
+                background: linear-gradient(#04acec,  #0186ba);
+            }
+            
+            #menu ul li:first-child a{
+                -moz-border-radius: 5px 5px 0 0;
+                -webkit-border-radius: 5px 5px 0 0;
+                border-radius: 5px 5px 0 0;
+            }
+            
+            #menu ul li:last-child a{
+                -moz-border-radius: 0 0 5px 5px;
+                -webkit-border-radius: 0 0 5px 5px;
+                border-radius: 0 0 5px 5px;
+            }
+            
+            #menu ul li:last-child a:after{
+                content: '';
+                position: absolute;
+                left: 30px;
+                top: 32px;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 8px solid #000;
+            }
+            
+            #menu ul li:last-child a:hover:after{
+                border-top-color: #04acec;
+            }
+            
+            /* Clear floated elements */
+            #menu:after{
+                visibility: hidden;
+                display: block;
+                font-size: 0;
+                content: " ";
+                clear: both;
+                height: 0;
+            }
+            
+            * html #menu             { zoom: 1; } /* IE6 */
+            *:first-child+html #menu { zoom: 1; } /* IE7 */
+            </style>
+        <script type="text/javascript" src="vendor/couchapp/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var menuButton = document.getElementById('cat');
+                menuButton.addEventListener('touchend', displayMenu);
+                menuButton.addEventListener('mouseover', displayMenu);
+                menuButton.addEventListener('mouseout', hideMenu);
+            });
+            function displayMenu() {
+                document.getElementById('submenu').style.display = "block";
+                document.getElementById('cat').removeEventListener('touchend', displayMenu);
+                setTimeout(function() {
+                           document.addEventListener('touchend', hideMenu);
+                           }, 500);
+            }
+            function hideMenu() {
+                document.getElementById('submenu').style.display = "none";
+                document.removeEventListener('touchend', hideMenu);
+                document.getElementById('cat').addEventListener('touchend', displayMenu);
+            }
+            </script>
+        <title>Menu Test</title>
+    </head>
+<body>
+    <b>This is some text</b>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <b>This is the end of the text</b>
+    <ul id="menu">
+        <li id="cat">
+            <a href="#">Categories</a>
+            <ul id="submenu">
+                <li><a href="#">Type A Suggestion</a></li>
+                <li><a href="#">Draw A Suggestion</a></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

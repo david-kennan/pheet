@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="vendor/couchapp/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript">
+            var context;
+            var canvasObj;
+            var is_touch_device;
+            $(document).ready(function() {
+                canvasObj = document.getElementById("canvas");
+                canvasObj.width = window.innerWidth * .98;
+                canvasObj.height = window.innerHeight * .97;
+                context = canvasObj.getContext("2d");
+                context.strokeStyle = "#000000";
+                
+                is_touch_device = 'ontouchstart' in document.documentElement;
+                if (is_touch_device) {
+                    canvasObj.addEventListener('touchmove', function(event) {
+                        event.preventDefault(); // prevents scrolling on mobile devices
+                    });
+                    canvasObj.addEventListener('touchmove', mouseDraw);
+                }
+            });
+            
+            function startDrawing(event) {
+                canvasObj.addEventListener('mousemove', mouseDraw);
+                context.beginPath();
+                var coords = getCoordinates(event);
+                context.moveTo(coords[0], coords[1]);
+            }
+            function getCoordinates (event) {
+                var xCoord;
+                var yCoord;
+                if (is_touch_device) {
+                    xCoord = event.targetTouches[0].pageX;
+                    yCoord = event.targetTouches[0].pageY;
+                }
+                else {
+                    xCoord = event.offsetX;
+                    yCoord = event.offsetY;
+                }
+                return [xCoord, yCoord];
+            }
+            function mouseDraw(event) {
+                var coords = getCoordinates(event);
+                context.lineTo(coords[0], coords[1]);
+                context.stroke();
+            }
+            function stopDrawing(event) {
+                canvasObj.removeEventListener('mousemove', mouseDraw);
+                var canvasData = canvasObj.toDataURL();
+                window.open(canvasData, 'title');
+            }
+            </script>
+  <title>Drawing Canvas</title>
+  </head>
+  <body>
+      <canvas id="canvas" style="border:1px solid #000000;" onmousedown="startDrawing(event)" onmouseup="stopDrawing(event)" ontouchstart="startDrawing(event)">Your browser doesn't support the HTML5 canvas tag.</canvas>
+  </body>
+</html>
