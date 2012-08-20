@@ -8,6 +8,7 @@ var jquerycookie="jquery.cookie.min.js"
 var intllib="rsc.js"
 var html2canvas="html2canvas.min.js"
 var html2cjquery="jquery.plugin.html2canvas.js"
+var jpegEncoder="jpeg_encoder_basic.js"
 var base="vendor/couchapp/"
 
 var ready = function() {
@@ -40,7 +41,7 @@ function load() {
           base+incrlib,
           base+tracklib,
           base+html2canvas,
-          base+html2cjquery,
+              base+html2cjquery,
           ready
           );
       break;

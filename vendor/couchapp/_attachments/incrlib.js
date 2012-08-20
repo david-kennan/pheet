@@ -133,7 +133,130 @@
 
 			$('.ui-dialog-contain').css('margin-top', x + 'px');		// $('.ui-mobile [data-role="page"], .ui-mobile [data-role="dialog"], .ui-page')
 		}
-	}
+ }
+ 
+ var context;
+ var canvasObj;
+ var is_touch_device;
+ var contentDrawn;
+ 
+ function showCanvas() {
+ var z = getMaxZIndexButGear()+1;
+ $('#wholemenu').css('display', 'none');
+ $('#gamereturn').css('display', 'inline');
+ $('#sugbutton').css('z-index',z);
+ document.getElementById("sugbutton").textContent = "Back to Game";
+ $("#page").append("\<div id=\"canvasLayer\"\>\<\/span\>\<span id=\"canvasSpan\" class=\"blockOverlay\"\>\<\/span\>\<\/div\>");
+ $('#canvasSpan').css('z-index',z);
+ $('#canvasLayer').append("\<canvas id=\"feedbackCanvas\"\>Your browser doesn't support the HTML5 canvas tag.\<\/canvas\>");
+ $("#feedbackCanvas").css({'position': 'fixed', 'z-index': z, 'top': '0px'});
+ 
+ canvasObj = document.getElementById("feedbackCanvas");
+ canvasObj.width = window.innerWidth;
+ canvasObj.height = window.innerHeight;
+ context = canvasObj.getContext("2d");
+ context.strokeStyle = "#000000";
+ is_touch_device = 'ontouchstart' in document.documentElement;
+ if (is_touch_device) {
+ canvasObj.addEventListener('touchmove', function(event) {
+                            event.preventDefault(); // prevents scrolling on mobile devices
+                            });
+ canvasObj.addEventListener('touchstart', startDrawing);
+ canvasObj.addEventListener('touchend', stopDrawing);
+ }
+ else {
+ $('#canvasLayer').on('mousedown', startDrawing);
+ $('#canvasLayer').on('mouseup', stopDrawing);
+ 
+ }
+ 
+ $("<div id='canvastoast' class='ui-loader ui-overlay-shadow ui-body-a ui-corner-all'><h3 style='text-align: center;'>Use your finger to draw your ideas on the screen</h3></div>")
+ .css({ "display":"block", "opacity":0.96, "left":"20%", "right":"20%", "z-index":getMaxZIndexButGear()-1 })
+ .appendTo($("body"))
+ .delay( Number((function(){if (!$.cookie('canvastoast')) {return 3000;} else {return 2000;}})()) )
+ .fadeOut(200, function(){
+          $(this).remove();
+          });
+ $.cookie('canvastoast', '1');
+ contentDrawn = false;
+ }
+ 
+ function startDrawing(event) {
+ var canvasPopup = $("#canvastoast");
+ if (canvasPopup.length) {
+ canvasPopup.remove();
+ }
+ var coords = getCoordinates(event);
+ if (coords[0] > $('#sugbutton').offset().left && coords[1] > $('#sugbutton').offset().top) {
+ if (contentDrawn) {
+ var tmpCanvas = document.createElement('canvas');
+ var res = tmpCanvas.toDataURL();
+ if (res.substr(0,6) == "data:,") {
+ var script = document.createElement('script');
+ script.type = "text/javascript";
+ script.src = "vendor/couchapp/jpeg_encoder_basic.js";
+ document.getElementsByTagName('head')[0].appendChild(script);
+ }
+ 
+ var tmptext = "\<div id=\"drawdialogdiv\"\>\<a id=\"drawdialoga\" href=\"drawdialog_v2.html\" data-rel=\"dialog\" data-prefetch\>\<\/a\>\<\/div\>";
+ $(document.body).append(tmptext);
+ $("#drawdialogdiv").css('z-index', getMaxZIndexButGear() + 2);
+ function topDialog() {
+ $("#dialog_b").css('z-index', getMaxZIndexButGear()+1);
+ $(document).off('pageshow', topDialog);
+ }
+ $(document).on('pageshow', topDialog);
+ $("#drawdialoga").click();
+ }
+ else {
+ $("#canvasLayer").remove();
+ $('#wholemenu').css('display', 'inline');
+ $('#gamereturn').css('display', 'none');
+ }
+ return;
+ }
+ canvasObj.addEventListener('mousemove', mouseDraw);
+ canvasObj.addEventListener('touchmove', mouseDraw);
+ context.beginPath();
+ context.moveTo(coords[0], coords[1]);
+ }
+ 
+ function getCoordinates (event) {
+ var xCoord;
+ var yCoord;
+ if (is_touch_device) {
+ xCoord = event.targetTouches[0].pageX;
+ yCoord = event.targetTouches[0].pageY;
+ }
+ else {
+ xCoord = event.offsetX;
+ yCoord = event.offsetY;
+ }
+ return [xCoord, yCoord];
+ }
+ 
+ function mouseDraw(event) {
+ if (!contentDrawn) {
+ contentDrawn = true;
+ document.getElementById("sugbutton").textContent = "Finished Drawing";
+ }
+ var coords = getCoordinates(event);
+ context.lineTo(coords[0], coords[1]);
+ context.stroke();
+ }
+ 
+ function stopDrawing(event) {
+ canvasObj.removeEventListener('mousemove', mouseDraw);
+ canvasObj.removeEventListener('touchmove', mouseDraw);
+ }
+ 
+ function capturePage() {
+ html2canvas([document.body], {
+             onrendered: function(canvas) {
+             document.body.appendChild(canvas);
+             }
+             });
+ }
 
 	function showBlocks() {
 		if($('#showBlocksLayer').length == 0) {
@@ -171,14 +294,15 @@
 	$("<div class='ui-loader ui-overlay-shadow ui-body-a ui-corner-all'><h3 style='text-align: center;'>Tap any area to make your suggestion</h3></div>")
     	.css({ "display":"block", "opacity":0.96, "left":"20%", "right":"20%", "z-index":getMaxZIndexButGear()+1 })
     	.appendTo($("body"))
-    	.delay( Number((function(){if (!$.cookie('toast')) {return 3000;} else {return 2000;}})()) )
+    	.delay( Number((function(){if (!$.cookie('blockstoast')) {return 3000;} else {return 2000;}})()) )
     	.fadeOut(200, function(){
        	  $(this).remove();
     	});
-	$.cookie('toast', '1');
+	$.cookie('blockstoast', '1');
 
 	var z = getMaxZIndexButGear()+1;
-	$(":jqmData(role=dialog)").css('z-index', z);
+	//$(":jqmData(role=dialog)").css('z-index', z);
+ //$("#dialog_welcome").css('z-index', z);
 	}
 
 	function showNodeList(e) {
@@ -572,14 +696,14 @@
 	window['kToggle']['nodeActionNAT'] = nodeActionNAT;
 	window['kToggle']['getMaxZIndex'] = getMaxZIndex; // helpful in debugging
 	window['kToggle']['getMaxZIndexButGear'] = getMaxZIndexButGear; // helpful in debugging
+ window['kToggle']['showCanvas'] = showCanvas;
 })();
 
 function gotofeedback() {
   kToggle.toggle();
-  //$('#sugbutton').html('Back to game');
-  //document.getElementById("sugbutton").textContent = "Back to game";
     $('#wholemenu').css('display', 'none');
     $('#gamereturn').css('display', 'inline');
+    $('#sugbutton').html('Back to game');
 }
 
 var savingFeedback = false; // used to differentiate between user clicking Submit and user closing the dialog (see pagehide handler)
@@ -600,14 +724,75 @@ function savefeedback() {
   $.post(restFrag, postData, 
       function(data) {
         console.log(data);
-      }, 
-      "json");
+      });
 }
 
-function capturePage() {
-    html2canvas([document.body], {
-                onrendered: function(canvas) {
-                document.body.appendChild(canvas);
-                }
-                });
+function drawfeedback() {
+    kToggle.showCanvas();
+}
+
+function returnToGame() {
+    $("#drawdialogdiv").remove();
+    $("#canvasLayer").remove();
+    $('#wholemenu').css('display', 'inline');
+    $('#gamereturn').css('display', 'none');
+}
+
+function saveDrawing() {
+    $('#canvasLayer').off('mousedown');
+    $('#canvasLayer').off('touchstart');
+    $("<div id='sendstatus' class='ui-loader ui-overlay-shadow ui-body-a ui-corner-all'><h3 style='text-align: center;'>Sending...</h3></div>")
+    .css({ "display":"block", "opacity":0.96, "left":"20%", "right":"20%","z-index":$("#canvasLayer").css('z-index') + 1})
+    .appendTo($("body"));
+    var feedbackText = $("#textarea").val();
+    $(document).on('pagehide', sendCanvas);
+    function sendCanvas() {
+        $(document).off('pagehide', sendCanvas);
+        $("#drawdialogdiv").remove();
+        html2canvas([document.getElementById("page")], {
+                    onrendered: function(canvas) {
+                    var dataType; // "png" or "jpeg"
+                    // this code is from http://jimdoescode.blogspot.nl/2011/11/trials-and-tribulations-with-html5.html
+                    var tdu = HTMLCanvasElement.prototype.toDataURL;
+                    HTMLCanvasElement.prototype.toDataURL = function(type)
+                    {
+                    var res = tdu.apply(this,arguments);
+                    dataType = "png";
+                    if(res.substr(0,6) == "data:,")
+                    {
+                    var encoder = new JPEGEncoder();
+                    dataType = "jpeg";
+                    return encoder.encode(this.getContext("2d").getImageData(0,0,this.width,this.height), 90);
+                    }
+                    else return res;
+                    }
+                    
+                    var doc = new Object();
+                    doc.page = "quiz";
+                    doc.version = "v02";
+                    doc.description = feedbackText;
+                    doc.trackingID = getUniqueVisitID();
+                    
+                    doc.imageData = canvas.toDataURL();
+                    doc.imageType = dataType;
+                    if ($.cookie('test user')) {
+                    doc.testdata = true;
+                    }
+                    var postData = JSON.stringify(doc);
+                    var restFrag = '_update/createDrawSuggestion';
+                    $.post(restFrag, postData,
+                           function(data) {
+                           console.log(data);
+                           });
+                    $("#sendstatus").children().text('Thank you for your feedback!')
+                    .delay(1000)
+                    .fadeOut(200, function(){
+                             $(this).remove();
+                             $("#canvasLayer").remove();
+                             $('#wholemenu').css('display', 'inline');
+                             $('#gamereturn').css('display', 'none');
+                             });
+                    }
+                    });
+    }
 }

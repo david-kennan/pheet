@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Your Suggestion</title>
+                </head>
+    <body>
+        <div id="dialog_b" data-role="dialog">
+            <div data-role="header" data-theme="d">
+                <h1>Suggestions</h1>
+            </div>
+            <div data-role="content" data-theme="c">
+                <h4>Describe Your Drawing (optional)</h4>
+                <div id="nodeDetailNewCommentDiv">
+                    <div data-role="fieldcontain">
+                        <label for="textarea"></label>
+                        <textarea name="textarea" id="textarea" placeholder="Type your description here"></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <a id="gamereturnbutton" data-role="button" data-rel="back" data-theme="b" data-inline="true" onclick="returnToGame()">Back to Game</a>
+                        <a id="sendbutton" data-role="button" data-rel="back" data-theme="b" data-inline="true" onclick="saveDrawing()">Submit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>

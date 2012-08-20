@@ -1,4 +1,4 @@
-ß<!DOCTYPE html>
+<!DOCTYPE html>
 <html>  
   <head>
     <meta charset="utf-8">
@@ -16,40 +16,23 @@
             /* Main */
             #sugmenu{
                 width: 150px;
-                height: 35px;
                 margin-left: auto;
-                padding: 0px 0 0 0;
                 list-style: none;
-                /*background: #111;
-                background: -moz-linear-gradient(#444, #111);
-                background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
-                background: -webkit-linear-gradient(#444, #111);
-                background: -o-linear-gradient(#444, #111);
-                background: -ms-linear-gradient(#444, #111);
-                background: linear-gradient(#444, #111);
-                -moz-border-radius: 50px;
-                border-radius: 50px;*/
-                /*-moz-box-shadow: 0 2px 1px #9c9c9c;
-                -webkit-box-shadow: 0 2px 1px #9c9c9c;
-                box-shadow: 0 2px 1px #9c9c9c;*/
             }
             
             #sugmenu li{
                 float: left;
-                padding: 5px 0 10px 0;
-                top:-5px; /* Added this line to offset padding above*/
                 position: relative;
             }
             
             #sugmenu a{
                 float: left;
                 height: 25px;
-                padding: 0 25px;
+                padding: 25px 0 0 0;
+                /*top:-45px; /* Added this line to offset padding above*/
                 color: #FFFFFF;
-                /*text-transform: uppercase;*/
-                font: bold 18px/25px Arial, Helvetica;
+                /*font: bold 18px/25px Arial, Helvetica;*/
                 text-decoration: none;
-                /*text-shadow: 0 1px 0 #000;*/
             }
             
             #sugmenu li:hover > a{
@@ -74,7 +57,7 @@
                 position: absolute;
                 /*top: 35px;*/
                 bottom: 55px;
-                right: 10px;
+                right: 20px;
                 z-index: 99999;
                 background: #444;
                 background: -moz-linear-gradient(#444, #111);
@@ -343,7 +326,7 @@
       </head>
     
       <body>
-        <div data-role="page" id="page"> 
+          <div data-role="page" id="page" style="height:535px">
         </div><!-- /page -->  	 
 
         <div id="dialog_welcome" data-rel="dialog" data-role="dialog" style="visibility: hidden;">
@@ -395,21 +378,22 @@
           </div><!-- /content -->
 
           <div id="footer" data-role="footer" data-position="fixed" 
-            class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo" style="height:45px">
-            <div class="ui-btn-left" style="top:15px; color:grey; height:45px">v02</div>
-              <ul id="wholemenu">
+            class="block66 ui-footer ui-bar-a ui-footer-fixed slideup ui-fixed-hidden" role="contentinfo" style="height:63px">
+            <div class="ui-btn-left" style="top:25px; color:grey; height:45px">v02</div>
+            <div id="wholemenu" class="ui-btn-right" style="top:-15px; right:-15px">
+              <ul>
                   <li id="sugmenu">
                       <a href="#">Suggestions?</a>
                       <ul id="submenu">
-                          <li><a href="#" onclick="gotofeedback()">Type your Suggestion</a></li>
-                          <li><a href="#">Draw your Suggestion</a></li>
+                          <li><a href="#" onclick="gotofeedback()" ontouchstart="gotofeedback()">Type your Suggestion</a></li>
+                          <li><a href="#" onclick="drawfeedback()" ontouchstart="drawfeedback()">Draw your Suggestion</a></li>
                       </ul>
                   </li>
               </ul>
-              <div id="gamereturn" style="display:none">
-              <h4 id="rightarea" style="text-align:right" class="ui-title" role="heading" aria-level="1">
-                  <span id="sugbutton" style="cursor:pointer; display: inline; height: 30px; margin-top:15px" >Back to game</span>
-                  <!--onclick="gotofeedback()" -->
+            </div>
+              <div class="ui-btn-right" id="gamereturn" style="display:none; top:15px">
+              <h4 id="rightarea" style="text-align:right;" class="ui-title" role="heading" aria-level="1">
+                  <span id="sugbutton" style="cursor:pointer; display: inline; height: 30px" >Back to game</span>
               </h4>
             </div>
           </div>

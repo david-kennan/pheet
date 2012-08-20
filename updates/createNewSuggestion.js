@@ -14,7 +14,7 @@ function(doc, req) {
     newDoc.trackingID = receivedObj.trackingID;
     newDoc.featureID = {};
     if (receivedObj.testdata) {
-        newDoc.testdata = receivedObj.testdata;
+        newDoc.testdata = true;
     }
     var success = newDoc._id && newDoc.page && newDoc.block && newDoc.suggestion && newDoc.dateCreated && newDoc.lastModified && (newDoc.FDLclass == 'SuggestionViaUI') && newDoc.appVersion && newDoc.labels && newDoc.featureID && newDoc.trackingID;
     if (success) {
