@@ -241,8 +241,13 @@
  document.getElementById("sugbutton").textContent = "Finished Drawing";
  }
  var coords = getCoordinates(event);
- context.lineTo(coords[0], coords[1]);
- context.stroke();
+ if (!is_touch_device && (coords[0] < 0.01 * window.innerWidth || coords[0] > 0.99 * window.innerWidth || coords[1] < 0.01 * window.innerHeight || coords[1] > 0.99 * window.innerHeight)) {
+     stopDrawing();
+ }
+ else {
+    context.lineTo(coords[0], coords[1]);
+    context.stroke();
+ }
  }
  
  function stopDrawing(event) {
